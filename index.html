@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lele's Cosmetics | Perfumes & Body Oils</title>
+<style>
+:root{--rose:#8f315d;--deep:#40172b;--soft:#fff3f7;--text:#2e2027}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;color:var(--text);background:#fffafc}
+.container{width:min(1120px,92%);margin:auto}
+header{background:#fff;border-bottom:1px solid #f0dce5;position:sticky;top:0;z-index:5}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:16px 0;gap:12px}
+.brand{font-size:1.2rem;font-weight:800;color:var(--deep)}.brand span{color:var(--rose)}
+.btn{display:inline-block;background:var(--rose);color:#fff;padding:11px 17px;border-radius:999px;text-decoration:none;font-weight:700}
+.hero{background:linear-gradient(135deg,#fff0f5,#f6d6e3);padding:58px 0}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}
+h1{font-size:clamp(2.2rem,6vw,4.4rem);line-height:1.02;color:var(--deep);margin:12px 0}
+p{color:#765c68}.hero-img{width:100%;max-height:430px;object-fit:cover;border-radius:24px;box-shadow:0 15px 45px #5d23401f}
+section{padding:55px 0}h2{color:var(--deep);font-size:2rem}.products{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:#fff;border:1px solid #efd9e3;border-radius:18px;overflow:hidden}.card img{width:100%;height:260px;object-fit:cover;background:#f7e3eb}
+.card-content{padding:17px}.price{color:var(--rose);font-weight:800;margin:12px 0}
+.info{background:var(--soft);border-radius:20px;padding:25px}.cta{background:var(--deep);color:#fff;border-radius:25px;padding:32px}.cta h2{color:#fff}
+footer{background:#2b1020;color:#e8cbd8;padding:30px 0}
+@media(max-width:760px){.hero-grid,.products{grid-template-columns:1fr}.nav nav{display:none}.hero{padding:38px 0}.card img{height:300px}}
+</style>
+</head>
+<body>
+<header><div class="container nav">
+<a class="brand" href="#">Lele's <span>Cosmetics</span></a>
+<nav><a href="#products">Products</a> &nbsp; <a href="#contact">Contact</a></nav>
+<a class="btn" href="https://wa.me/260978955714?text=Hello%20Lele%27s%20Cosmetics%2C%20I%27d%20like%20to%20place%20an%20order.">WhatsApp Order</a>
+</div></header>
+
+<section class="hero"><div class="container hero-grid">
+<div><p style="color:#8f315d;font-weight:800;letter-spacing:1px">BEAUTY • FRAGRANCE • CONFIDENCE</p>
+<h1>Find your signature fragrance.</h1>
+<p>Shop perfumes and body oils from Lele's Cosmetics in Lundazi. Order conveniently through WhatsApp and arrange local delivery.</p>
+<a class="btn" href="#products">Shop Products</a></div>
+<img class="hero-img" src="images/perfume_4.jpg" alt="Lele's Cosmetics perfume collection">
+</div></section>
+
+<section id="products"><div class="container">
+<h2>Featured Perfumes</h2>
+<p>Our current perfume range. Contact us to confirm availability and your preferred fragrance.</p>
+<div class="products">
+<article class="card"><img src="images/perfume_1.jpg" alt="Malikat Al Arab perfume"><div class="card-content"><h3>Malikat Al Arab</h3><p>Elegant fragrance in a premium bottle.</p><div class="price">K100–K200</div><a class="btn" href="https://wa.me/260978955714?text=I%27m%20interested%20in%20Malikat%20Al%20Arab%20perfume.">Order</a></div></article>
+<article class="card"><img src="images/perfume_3.jpg" alt="Ameerat Al Arab perfume"><div class="card-content"><h3>Ameerat Al Arab</h3><p>A beautiful fragrance option for your collection.</p><div class="price">K100–K200</div><a class="btn" href="https://wa.me/260978955714?text=I%27m%20interested%20in%20Ameerat%20Al%20Arab%20perfume.">Order</a></div></article>
+<article class="card"><img src="images/perfume_5.jpg" alt="Malikat Al Arab perfume in yellow bottle"><div class="card-content"><h3>Malikat Al Arab Variant</h3><p>Ask about available variants and stock.</p><div class="price">K100–K200</div><a class="btn" href="https://wa.me/260978955714?text=I%27m%20interested%20in%20the%20Malikat%20Al%20Arab variant.">Order</a></div></article>
+<article class="card"><img src="images/perfume_4.jpg" alt="Perfume collection"><div class="card-content"><h3>Perfume Collection</h3><p>Explore available fragrances from our collection.</p><div class="price">K100–K200</div><a class="btn" href="https://wa.me/260978955714?text=Please%20share%20your%20available%20perfume%20collection.">Ask Availability</a></div></article>
+</div>
+<h2 style="margin-top:45px">Body Oils</h2>
+<div class="info"><h3>Body Oils from K75</h3><p>Body oils will be added with individual product photos, names, and exact prices when supplied.</p><a class="btn" href="https://wa.me/260978955714?text=Please%20share%20your%20available%20body%20oils.">Ask About Body Oils</a></div>
+</div></section>
+
+<section id="contact"><div class="container"><div class="cta">
+<h2>Order from Lele's Cosmetics</h2>
+<p style="color:#ead2dd">Location: Lundazi, Zambia<br>WhatsApp: 0978955714<br>Payments: Mobile Money and Cash on Delivery<br>Delivery: Local delivery</p>
+<a class="btn" style="background:#25d366;color:#102c1c" href="https://wa.me/260978955714?text=Hello%20Lele%27s%20Cosmetics%2C%20I%27d%20like%20to%20place%20an%20order.">Chat on WhatsApp</a>
+</div></div></section>
+<footer><div class="container"><strong>Lele's Cosmetics</strong><br>Perfumes • Body Oils • Beauty Essentials<br><small>© 2026 Lele's Cosmetics</small></div></footer>
+</body></html>
