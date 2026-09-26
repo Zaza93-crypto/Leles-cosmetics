@@ -1,84 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lele's Cosmetics | Perfumes & Body Oils</title>
-  <meta name="description" content="Discover perfumes and body oils from Lele's Cosmetics. Perfumes K100–K200. Body oils K75. We deliver.">
-  <style>
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#fff7fb;color:#24131d}
-    header{background:linear-gradient(135deg,#8e2458,#d95b91);color:white;padding:48px 22px;text-align:center}
-    header h1{margin:0 0 10px;font-size:2.2rem}
-    header p{margin:0;font-size:1.05rem}
-    .container{max-width:900px;margin:auto;padding:28px 18px}
-    .hero{background:white;border-radius:22px;padding:28px;box-shadow:0 8px 25px rgba(80,20,50,.10);margin-top:-25px;position:relative}
-    h2{color:#8e2458;margin-top:0}
-    .intro{line-height:1.7;font-size:1rem}
-    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;margin:24px 0}
-    .card{background:#fff;border:1px solid #f0d6e3;border-radius:18px;padding:24px;text-align:center}
-    .icon{font-size:2.5rem;margin-bottom:8px}
-    .price{font-size:1.25rem;font-weight:bold;color:#8e2458}
-    .features{line-height:1.9;padding-left:20px}
-    .cta{background:#8e2458;color:#fff;border-radius:20px;padding:28px;text-align:center;margin-top:25px}
-    .cta h2{color:white}
-    .btn{display:inline-block;margin:8px 5px;padding:13px 20px;border-radius:30px;text-decoration:none;font-weight:bold}
-    .whatsapp{background:#25D366;color:white}
-    .home{background:white;color:#8e2458}
-    footer{text-align:center;padding:24px;color:#765866;font-size:.9rem}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leles Cosmetics - Perfume Collection</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Poppins',sans-serif;background:#fffaf6;color:#2b2b2b}
+  header{text-align:center;padding:40px 20px 10px}
+  header h1{font-family:'Playfair Display',serif;font-size:42px;color:#5a2a2a}
+  header p{color:#8a6a6a;margin-top:8px}
+  .grid{max-width:1200px;margin:30px auto;padding:0 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
+  .card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px rgba(90,42,42,0.08);transition:all .3s}
+  .card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(90,42,42,0.15)}
+  .card img{width:100%;height:380px;object-fit:cover}
+  .card-body{padding:16px 18px 20px}
+  .card-body h3{font-family:'Playfair Display',serif;font-size:18px;margin-bottom:4px}
+  .card-body .price{color:#b56576;font-weight:600;margin-top:6px}
+  .badge{display:inline-block;background:#ffe8e9;color:#9a3d4e;font-size:11px;padding:4px 10px;border-radius:20px;margin-bottom:6px}
+  footer{text-align:center;padding:40px;color:#aaa;font-size:12px}
+  .btn{display:inline-block;margin-top:20px;background:#5a2a2a;color:#fff;padding:12px 28px;border-radius:30px;text-decoration:none}
+</style>
 </head>
 <body>
-  <header>
-    <h1>Lele's Cosmetics</h1>
-    <p>Perfumes & Body Oils for Your Glow, Confidence & Irresistible Fragrance</p>
-  </header>
+<header>
+  <h1>Leles Cosmetics</h1>
+  <p>Authentic • Long Lasting • Premium Perfumes</p>
+  <a class="btn" href="index.html">← Back to Home</a>
+</header>
 
-  <main class="container">
-    <section class="hero">
-      <h2>About Our Perfumes & Body Oils</h2>
-      <p class="intro">
-        Welcome to <strong>Lele's Cosmetics</strong> — your go-to spot for beautiful fragrances
-        and body oils designed to help you feel fresh, confident and ready to make an impression.
-        Whether you're getting ready for work, a special occasion or simply want to smell amazing
-        every day, we have something for you.
-      </p>
+<div class="grid">
+  <div class="card"><img src="assets/perfumes/01-chocolate-roll-on.jpg"><div class="card-body"><span class="badge">ALCOHOL FREE</span><h3>Chocolate Roll-on Attar</h3><p>10ml Premium</p><div class="price">K100</div></div></div>
+  <div class="card"><img src="assets/perfumes/02-malikat-al-arab-burgundy.jpg"><div class="card-body"><span class="badge">BEST SELLER</span><h3>Malikat Al Arab - Burgundy</h3><p>100ml Eau De Parfum</p><div class="price">K100</div></div></div>
+  <div class="card"><img src="assets/perfumes/03-ameerat-al-arab-red.jpg"><div class="card-body"><span class="badge">BEST SELLER</span><h3>Ameerat Al Arab</h3><p>100ml Eau De Parfum</p><div class="price">K100</div></div></div>
+  <div class="card"><img src="assets/perfumes/04-malikat-al-arab-pink-box.jpg"><div class="card-body"><span class="badge">NEW</span><h3>Malikat Al Arab - Pink</h3><p>100ml Eau De Parfum</p><div class="price">K100</div></div></div>
+  <div class="card"><img src="assets/perfumes/05-malikat-al-arab-k100-poster.jpg"><div class="card-body"><span class="badge">OFFER - Only K100</span><h3>Malikat Al Arab - Abiyad</h3><p>Authentic Long Lasting 50ml - Zambia</p><div class="price">Only K100</div></div></div>
+  <div class="card"><img src="assets/perfumes/06-kiara-pistachio-frost.jpg"><div class="card-body"><span class="badge">JD COLLECTION</span><h3>Kiara Pistachio Frost</h3><p>Trending Sweet Scent</p><div class="price">K100</div></div></div>
+  <div class="card"><img src="assets/perfumes/07-farfashah-pink.jpg"><div class="card-body"><span class="badge">NEW</span><h3>Farfashah</h3><p>100ml Eau De Parfum</p><div class="price">K100</div></div></div>
+  <div class="card"><img src="assets/perfumes/08-heena-attar.jpg"><div class="card-body"><span class="badge">ALCOHOL FREE</span><h3>Heena Attar Roll-on</h3><p>6ml - Manasik</p><div class="price">K50</div></div></div>
+  <div class="card"><img src="assets/perfumes/09-sandal-heena-duo.jpg"><div class="card-body"><span class="badge">DUO SET</span><h3>Sandal & Heena Attars</h3><p>Alcohol Free Roll-ons</p><div class="price">K80 Set</div></div></div>
+</div>
 
-      <div class="cards">
-        <div class="card">
-          <div class="icon">🌸</div>
-          <h3>Perfumes</h3>
-          <p>Enjoy attractive fragrances for different moods and occasions.</p>
-          <div class="price">K100 – K200</div>
-        </div>
-        <div class="card">
-          <div class="icon">✨</div>
-          <h3>Body Oils</h3>
-          <p>Add a beautiful finishing touch to your everyday beauty routine.</p>
-          <div class="price">K75</div>
-        </div>
-      </div>
-
-      <h2>Why Shop With Us?</h2>
-      <ul class="features">
-        <li>Affordable perfume options from K100 to K200.</li>
-        <li>Body oils available at K75.</li>
-        <li>Great choices for everyday wear and special occasions.</li>
-        <li>Convenient ordering through WhatsApp.</li>
-        <li>We deliver.</li>
-      </ul>
-
-      <div class="cta">
-        <h2>Kanele ladies, patronise us! 💕</h2>
-        <p>Don't leave home smelling ordinary. Find your fragrance and let your presence speak for itself.</p>
-        <a class="btn whatsapp" href="https://wa.me/260978955714" target="_blank">Order on WhatsApp</a>
-        <a class="btn home" href="index.html">Back to Home</a>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    Lele's Cosmetics • WhatsApp: 0978955714 • We Deliver
-  </footer>
+<footer>© 2026 Leles Cosmetics - Zambia | All perfumes are authentic long lasting</footer>
 </body>
 </html>
