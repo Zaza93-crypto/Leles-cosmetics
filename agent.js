@@ -10,4 +10,3 @@ function reply(q){q=q.toLowerCase();if(/perfume|fragrance|scent/.test(q))return"
 function send(v){v=(v||input.value).trim();if(!v)return;add(v,true);input.value="";setTimeout(()=>add(reply(v)),150)}
 b.onclick=()=>{box.classList.toggle("open");if(box.classList.contains("open")&&!msgs.children.length)add("Hello! 👋 Welcome to <b>Lele's Cosmetics</b>.<br><br>I can help with perfumes, body oils, prices, ordering and delivery.");if(box.classList.contains("open"))input.focus()};box.querySelector(".laClose").onclick=()=>box.classList.remove("open");box.querySelector("#laSend").onclick=()=>send();input.onkeydown=e=>{if(e.key==="Enter")send()};box.querySelector(".laBtns").onclick=e=>{if(e.target.dataset.q)send(e.target.dataset.q)}
 })();
-<script src="agent.js"></script>
