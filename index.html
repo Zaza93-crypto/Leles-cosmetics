@@ -203,66 +203,66 @@
       <p class="small" style="color:#c9a9b8;">© 2026 Lele's Cosmetics. All rights reserved.</p>
     </div>
   </footer>
-<!-- Lele's AI Assistant: frontend shell -->
+</body>
+</html>
+<!-- Lele's AI Assistant -->
 <script>
 (function(){
-  const SUPABASE_URL = "https://cpfentirkmxzirnhjhgr.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_MOt9jcP9HonkGbxQzSZCAA_Z4KpH28U";
+const SB_URL="https://cpfentirkmxzirnhjhgr.supabase.co";
+const SB_KEY="sb_publishable_MOt9jcP9HonkGbxQzSZCAA_Z4KpH28U";
+const AI_URL=SB_URL+"/functions/v1/lele-ai";
+const WA="https://wa.me/260978955714";
 
-  const box=document.createElement("div");
-  box.innerHTML=`
-  <button id="lele-ai-open" style="position:fixed;right:20px;bottom:20px;z-index:9999;border:0;border-radius:50%;width:60px;height:60px;background:#8f315d;color:#fff;font-size:25px;box-shadow:0 8px 25px #0003;cursor:pointer">💬</button>
-  <div id="lele-ai" style="display:none;position:fixed;right:20px;bottom:90px;width:min(370px,calc(100vw - 30px));height:520px;background:#fff;border-radius:20px;z-index:9998;box-shadow:0 15px 45px #0004;overflow:hidden;font-family:Arial">
-    <div style="background:#8f315d;color:white;padding:16px;font-weight:bold">Lele's AI Assistant</div>
-    <div id="lele-msgs" style="height:390px;overflow:auto;padding:14px;background:#fffafc">
-      <div style="background:#f3e2ea;padding:10px;border-radius:12px;margin-bottom:10px">Hi 👋 I'm Lele's Assistant. I can help you with perfumes, body oils, prices and placing an order.</div>
-    </div>
-    <div style="display:flex;padding:10px;border-top:1px solid #eee">
-      <input id="lele-input" placeholder="Ask me anything..." style="flex:1;padding:11px;border:1px solid #ddd;border-radius:20px;outline:0">
-      <button id="lele-send" style="margin-left:7px;border:0;border-radius:20px;padding:0 16px;background:#8f315d;color:#fff">Send</button>
-    </div>
-  </div>`;
-  document.body.appendChild(box);
+const root=document.createElement("div");
+root.innerHTML=`<button id="lai-open" aria-label="Open Lele's Assistant" style="position:fixed;right:20px;bottom:20px;z-index:9999;border:0;border-radius:50%;width:62px;height:62px;background:#8f315d;color:#fff;font-size:26px;box-shadow:0 8px 25px #0004;cursor:pointer">💬</button>
+<div id="lai" style="display:none;position:fixed;right:20px;bottom:94px;width:min(390px,calc(100vw - 28px));height:560px;background:#fff;border-radius:20px;z-index:9998;box-shadow:0 15px 45px #0004;overflow:hidden;font-family:Arial,sans-serif">
+<div style="background:#8f315d;color:#fff;padding:16px;font-weight:700">Lele's AI Assistant <span style="float:right">✦</span></div>
+<div id="lai-msgs" style="height:425px;overflow:auto;padding:14px;background:#fffafc">
+<div style="background:#f3e2ea;padding:11px;border-radius:13px;margin-bottom:10px">Hi 👋 I'm Lele's AI Assistant. Ask me about our perfumes, body oils, prices, delivery or placing an order.</div></div>
+<div style="display:flex;padding:10px;border-top:1px solid #eee;gap:7px">
+<input id="lai-input" placeholder="Ask me anything..." style="flex:1;padding:12px;border:1px solid #ddd;border-radius:22px;outline:0">
+<button id="lai-send" style="border:0;border-radius:22px;padding:0 17px;background:#8f315d;color:#fff">Send</button></div>
+</div>`;
+document.body.appendChild(root);
 
-  const open=document.getElementById("lele-ai-open"), chat=document.getElementById("lele-ai");
-  open.onclick=()=>{chat.style.display=chat.style.display==="none"?"block":"none"};
+const chat=document.getElementById("lai");
+document.getElementById("lai-open").onclick=()=>chat.style.display=chat.style.display==="none"?"block":"none";
 
-  async function products(){
-    try{
-      const r=await fetch(SUPABASE_URL+"/rest/v1/products?active=eq.true&select=name,category,price,description,stock",{headers:{apikey:SUPABASE_KEY,Authorization:"Bearer "+SUPABASE_KEY}});
-      return await r.json();
-    }catch(e){return []}
-  }
-
-  function add(who,text){
-    const d=document.createElement("div");
-    d.style.cssText="padding:10px;border-radius:12px;margin-bottom:10px;"+(who==="bot"?"background:#f3e2ea":"background:#8f315d;color:white;margin-left:35px");
-    d.textContent=text; document.getElementById("lele-msgs").appendChild(d);
-    document.getElementById("lele-msgs").scrollTop=999999;
-  }
-
-  async function answer(q){
-    const p=await products();
-    const l=q.toLowerCase();
-    if(l.includes("price")||l.includes("cost")||l.includes("how much")){
-      return p.length ? p.map(x=>`${x.name}: K${x.price}`).join(" • ") : "Perfumes are K100–K200 and body oils are K75.";
-    }
-    if(l.includes("perfume")) return "Our perfumes are currently priced from K100 to K200. I can help you place an order.";
-    if(l.includes("oil")) return "Our body oils are K75. I can help you place an order.";
-    if(l.includes("deliver")||l.includes("delivery")) return "Yes, we deliver. Delivery details can be confirmed when you place your order.";
-    if(l.includes("order")||l.includes("buy")||l.includes("purchase")) return "Great! Please send your name, product, quantity and delivery location. Then I'll help you continue on WhatsApp.";
-    if(l.includes("hello")||l.includes("hi")) return "Hello 👋 Welcome to Lele's Cosmetics! Ask me about perfumes, body oils, prices or ordering.";
-    return "I can help with perfumes, body oils, prices, delivery and orders. What would you like to know?";
-  }
-
-  async function send(){
-    const i=document.getElementById("lele-input"), q=i.value.trim(); if(!q)return;
-    i.value=""; add("user",q); add("bot","One moment...");
-    const msgs=document.getElementById("lele-msgs"); msgs.removeChild(msgs.lastChild);
-    add("bot",await answer(q));
-  }
-  document.getElementById("lele-send").onclick=send;
-  document.getElementById("lele-input").onkeydown=e=>{if(e.key==="Enter")send()};
+let history=[];
+function add(role,text,link){
+ const d=document.createElement("div");
+ d.style.cssText=`padding:11px;border-radius:13px;margin-bottom:10px;${role==="user"?"background:#8f315d;color:#fff;margin-left:35px":"background:#f3e2ea"}`;
+ d.textContent=text;
+ if(link){const a=document.createElement("a");a.href=link;a.target="_blank";a.textContent="  Order on WhatsApp →";a.style.cssText="display:block;margin-top:8px;font-weight:bold;color:#8f315d";d.appendChild(a);}
+ document.getElementById("lai-msgs").appendChild(d);
+ document.getElementById("lai-msgs").scrollTop=999999;
+}
+async function getProducts(){
+ const r=await fetch(SB_URL+"/rest/v1/products?active=eq.true&select=id,name,category,price,description,stock",{headers:{apikey:SB_KEY,Authorization:"Bearer "+SB_KEY}});
+ return r.ok?await r.json():[];
+}
+async function send(){
+ const input=document.getElementById("lai-input"), q=input.value.trim(); if(!q)return;
+ input.value=""; add("user",q); history.push({role:"user",content:q});
+ const pending="Thinking...";
+ add("assistant",pending);
+ const box=document.getElementById("lai-msgs"); box.removeChild(box.lastChild);
+ try{
+   const products=await getProducts();
+   const r=await fetch(AI_URL,{method:"POST",headers:{"Content-Type":"application/json","apikey":SB_KEY},body:JSON.stringify({messages:history,products})});
+   const data=await r.json();
+   if(!r.ok) throw new Error(data.error||"AI service unavailable");
+   history.push({role:"assistant",content:data.reply});
+   add("assistant",data.reply,/order|buy|purchase|whatsapp/i.test(q)?WA:null);
+ }catch(e){
+   add("assistant","The AI assistant is not fully configured yet. You can order directly on WhatsApp.");
+   add("assistant","",{});
+   const last=document.getElementById("lai-msgs").lastChild;
+   const a=document.createElement("a"); a.href=WA; a.target="_blank"; a.textContent="Open WhatsApp →"; a.style.cssText="display:block;color:#8f315d;font-weight:bold"; last.appendChild(a);
+ }
+}
+document.getElementById("lai-send").onclick=send;
+document.getElementById("lai-input").onkeydown=e=>{if(e.key==="Enter")send()};
 })();
 </script>
 </body>
