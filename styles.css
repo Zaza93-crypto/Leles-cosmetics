@@ -1,0 +1,67 @@
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#241b17;--brown:#4a3024;--cream:#f3eee7;--paper:#faf8f4;--line:#d9d0c6;--muted:#766b62}
+html{scroll-behavior:smooth}
+body{font-family:"DM Sans",sans-serif;color:var(--ink);background:var(--paper);line-height:1.5}
+a{text-decoration:none;color:inherit}
+.site-header{height:82px;padding:0 5vw;display:flex;align-items:center;gap:34px;border-bottom:1px solid var(--line);background:rgba(250,248,244,.94);position:sticky;top:0;z-index:20;backdrop-filter:blur(10px)}
+.logo{font-size:19px;font-weight:700;letter-spacing:.13em;white-space:nowrap}
+.logo span{font-weight:400;font-size:10px;display:block;letter-spacing:.34em;margin-top:-2px}
+.nav{display:flex;gap:28px;margin-left:auto;font-size:13px}
+.nav a:hover,.text-link:hover{opacity:.6}
+.header-cta,.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:2px;padding:13px 19px;font-size:12px;font-weight:700;letter-spacing:.04em}
+.header-cta{background:var(--ink);color:white}
+.menu-btn{display:none;background:none;border:0;font-size:24px}
+.hero{min-height:690px;padding:65px 5vw 70px;display:grid;grid-template-columns:.78fr 1.22fr;gap:45px;align-items:center}
+.hero-copy{max-width:510px}
+.eyebrow{font-size:10px;letter-spacing:.22em;font-weight:700;color:#7b6e63;margin-bottom:20px}
+h1,h2{font-family:"Playfair Display",serif;font-weight:500;line-height:.98}
+h1{font-size:clamp(62px,8vw,112px);letter-spacing:-.045em}
+h1 em,h2 em{font-style:italic;font-weight:500}
+.hero-text{color:var(--muted);max-width:450px;margin:28px 0 30px;font-size:15px}
+.hero-actions{display:flex;align-items:center;gap:24px}
+.btn-dark{background:var(--ink);color:#fff}
+.text-link{font-size:12px;font-weight:700}
+.text-link span{margin-left:9px;font-size:18px}
+.hero-collage{height:570px;display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:9px}
+.tile{overflow:hidden;position:relative}
+.tile-dark{background:#2b211d;color:#f4eee5;padding:30px;display:flex;flex-direction:column;justify-content:flex-end}
+.tile-dark strong{font-family:"Playfair Display";font-size:25px;line-height:1.05;font-weight:500}
+.tile-label{font-size:9px;letter-spacing:.25em;margin-bottom:auto}
+.tile-bottle{background:#e7ddd1;display:flex;align-items:center;justify-content:center}
+.tile-body{background:#3a2921;color:#f4eee5;padding:34px;display:flex;flex-direction:column;justify-content:center}
+.tile-body p{font-family:"Playfair Display";font-size:31px;line-height:1.02}
+.tile-body span{font-size:8px;letter-spacing:.18em;margin-top:25px}
+.tile-flower{background:#d8c5b0}
+.flower{position:absolute;font-size:85px;color:#f5eee5;filter:drop-shadow(8px 10px 0 rgba(70,43,29,.12))}
+.flower-a{left:12%;bottom:5%;transform:rotate(-20deg)}.flower-b{right:8%;top:5%;font-size:60px}.flower-c{left:45%;top:28%;font-size:55px}
+.bottle{width:112px;height:190px;border-radius:16px 16px 10px 10px;background:linear-gradient(90deg,#8c6a4b,#d7b98e 45%,#8a6648);position:relative;box-shadow:0 18px 35px rgba(35,22,14,.22)}
+.cap{width:48px;height:30px;background:#191715;border-radius:13px 13px 4px 4px;position:absolute;left:32px;top:-26px}
+.bottle-label{position:absolute;left:12px;right:12px;top:68px;background:#eee4d7;padding:15px 5px;text-align:center;color:#382820}
+.bottle-label small,.bottle-label span{display:block;font-size:6px;letter-spacing:.15em}.bottle-label b{font-family:"Playfair Display";font-size:18px;font-weight:500;display:block;margin:5px 0}
+.bottle-small{transform:scale(.72)}
+.manifesto{background:var(--cream);padding:90px 10vw;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end}
+.manifesto h2,.section-head h2,.experience h2,.contact-strip h2{font-size:clamp(40px,5vw,68px)}
+.manifesto>p{font-size:15px;color:var(--muted);max-width:500px}
+.collection{padding:95px 5vw}
+.section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:45px}
+.product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.product-visual{height:400px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.visual-perfume{background:#cbb5a0}.visual-perfume-light{background:#e8e0d5}.visual-oil{background:#b99a76}
+.mini-bottle{width:110px;height:205px;border-radius:15px 15px 10px 10px;background:#6f4d38;position:relative;box-shadow:0 25px 40px #3e281b55}
+.mini-cap,.oil-cap{position:absolute;width:47px;height:42px;left:31px;top:-34px;background:#171513;border-radius:15px 15px 4px 4px}
+.mini-label{position:absolute;left:10px;right:10px;top:70px;background:#efe8df;padding:15px 4px;text-align:center;font-size:7px;letter-spacing:.15em}.mini-label b{font-family:"Playfair Display";font-size:19px;letter-spacing:0}
+.oil-bottle{width:100px;height:170px;background:#9d6c32;border-radius:12px 12px 17px 17px;position:relative;box-shadow:0 25px 40px #3e281b55}
+.oil-cap{height:48px;top:-43px;background:#1d1a17}.oil-label{position:absolute;top:62px;left:10px;right:10px;background:#efe7d9;text-align:center;padding:12px 3px;font-size:7px}.oil-label b{font-family:"Playfair Display";font-size:18px;display:block}
+.product-info{display:flex;justify-content:space-between;gap:15px;padding:18px 2px}.product-info span{font-size:8px;letter-spacing:.2em;color:#897c71}.product-info h3{font-family:"Playfair Display";font-size:22px;font-weight:500;margin-top:3px}.product-info>strong{font-size:12px;white-space:nowrap}
+.experience{display:grid;grid-template-columns:1.05fr .95fr;background:var(--cream)}
+.experience-image{min-height:620px;background:#3a2921;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.experience-image:before,.experience-image:after{content:"";position:absolute;border:1px solid #cdbca9aa;border-radius:50%;width:440px;height:440px}
+.experience-image:after{width:610px;height:610px}
+.big-bottle{width:150px;height:300px;background:linear-gradient(90deg,#805b3e,#cda477,#795438);border-radius:23px 23px 15px 15px;position:relative;z-index:2;box-shadow:0 30px 50px #160e0a66}
+.big-cap{width:68px;height:55px;position:absolute;top:-48px;left:41px;background:#141311;border-radius:20px 20px 6px 6px}
+.big-label{position:absolute;top:110px;left:14px;right:14px;background:#eee4d7;text-align:center;padding:25px 4px;font-family:"Playfair Display";font-size:17px}.big-label b{font-size:25px;font-weight:500}.big-label small{display:block;font:6px "DM Sans";letter-spacing:.18em;margin-top:7px}
+.experience-copy{padding:90px 9vw;display:flex;flex-direction:column;justify-content:center}.experience-copy p:not(.eyebrow){color:var(--muted);max-width:470px;margin:28px 0}.experience-copy .btn{width:max-content}
+.contact-strip{background:#2b211d;color:#f7efe6;padding:90px 10vw;display:flex;justify-content:space-between;align-items:end;gap:50px}.contact-strip .eyebrow{color:#b9a99b}.contact-strip h2{font-size:clamp(38px,4.5vw,62px)}.contact-actions{text-align:right}.btn-light{background:#f4eee7;color:#241b17}.contact-actions p{font-size:11px;color:#b9a99b;margin-top:17px;line-height:1.8}
+footer{padding:28px 5vw;display:flex;justify-content:space-between;align-items:center;font-size:10px;color:#786d65;border-top:1px solid var(--line)}footer .logo{color:var(--ink);font-size:15px}footer a:last-child{font-weight:700;color:var(--ink)}
+@media(max-width:900px){.hero{grid-template-columns:1fr;padding-top:50px}.hero-collage{height:500px}.manifesto{grid-template-columns:1fr;gap:30px}.experience{grid-template-columns:1fr}.experience-image{min-height:480px}.contact-strip{flex-direction:column;align-items:flex-start}.contact-actions{text-align:left}.nav{display:none}.menu-btn{display:block;margin-left:auto}.header-cta{display:none}.site-header{justify-content:space-between}}
+@media(max-width:620px){.site-header{height:70px;padding:0 20px}.hero{padding:45px 20px}.hero-collage{height:390px;gap:5px}.tile-dark{padding:18px}.tile-dark strong{font-size:18px}.tile-body{padding:18px}.tile-body p{font-size:22px}.bottle{transform:scale(.72)}.manifesto,.collection,.experience-copy,.contact-strip{padding:65px 20px}.section-head{align-items:flex-start;gap:20px;flex-direction:column}.product-grid{grid-template-columns:1fr}.product-visual{height:330px}.hero-actions{flex-wrap:wrap}footer{padding:25px 20px;gap:20px;flex-wrap:wrap}.experience-image{min-height:390px}}
