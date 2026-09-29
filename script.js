@@ -1,20 +1,4 @@
-const menuBtn = document.querySelector('.menu-btn');
-const nav = document.querySelector('.nav');
-
-if (menuBtn && nav) {
-  menuBtn.addEventListener('click', () => {
-    const open = nav.classList.toggle('open');
-    menuBtn.setAttribute('aria-expanded', open);
-  });
-
-  document.querySelectorAll('.nav a').forEach(link => {
-    link.addEventListener('click', () => nav.classList.remove('open'));
-  });
-}
-
-/* Lele's Cosmetics customer assistant
-   No Supabase, API key, or external service required. */
-document.addEventListener('DOMContentLoaded', () => {
+const initLeleAssistant = () => {
   const toggle = document.getElementById('leleChatToggle');
   const chat = document.getElementById('leleChat');
   const close = document.getElementById('leleChatClose');
@@ -22,7 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const input = document.getElementById('leleChatInput');
   const messages = document.getElementById('leleChatMessages');
 
-  if (!toggle || !chat || !form || !input || !messages) return;
+  if (!toggle || !chat || !form || !input || !messages) {
+    console.error("Lele's Assistant: chatbot elements not found.");
+    return;
+  }
 
   const whatsapp = '260978955714';
 
@@ -71,7 +58,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const openChat = () => {
     chat.classList.add('open');
     chat.setAttribute('aria-hidden', 'false');
-    setTimeout(() => input.focus(), 100);
+
+    setTimeout(() => {
+      input.focus();
+    }, 100);
   };
 
   const closeChat = () => {
@@ -80,24 +70,57 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   toggle.addEventListener('click', openChat);
+
   close.addEventListener('click', closeChat);
 
   form.addEventListener('submit', (event) => {
     event.preventDefault();
+
     const question = input.value.trim();
+
     if (!question) return;
 
     addMessage(question, 'user');
+
     input.value = '';
 
-    setTimeout(() => addMessage(botReply(question)), 250);
+    setTimeout(() => {
+      addMessage(botReply(question));
+    }, 250);
   });
 
-  document.querySelectorAll('.lele-quick-actions button').forEach(button => {
-    button.addEventListener('click', () => {
-      const question = button.dataset.question;
-      addMessage(question, 'user');
-      setTimeout(() => addMessage(botReply(question)), 250);
+  document
+    .querySelectorAll('.lele-quick-actions button')
+    .forEach((button) => {
+
+      button.addEventListener('click', () => {
+
+        const question = button.dataset.question;
+
+        addMessage(question, 'user');
+
+        setTimeout(() => {
+          addMessage(botReply(question));
+        }, 250);
+
+      });
+
     });
-  });
-});
+
+  console.log("Lele's Assistant loaded successfully.");
+};
+
+
+// Start chatbot after page is ready
+if (document.readyState === 'loading') {
+
+  document.addEventListener(
+    'DOMContentLoaded',
+    initLeleAssistant
+  );
+
+} else {
+
+  initLeleAssistant();
+
+}
