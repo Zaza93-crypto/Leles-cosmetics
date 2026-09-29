@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Shop Lele's Cosmetics perfumes and body oils.">
+<title>Products | Lele's Cosmetics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.products-page{padding:80px 5vw}
+.products-hero{max-width:720px;margin-bottom:55px}
+.products-hero h1{font-size:clamp(50px,7vw,90px)}
+.products-hero p{color:var(--muted);max-width:600px;margin-top:22px}
+.category{margin:65px 0 25px;font-family:"Playfair Display";font-size:34px}
+.product-grid-full{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.shop-card{border:1px solid var(--line);background:#fff}
+.shop-visual{height:360px;display:flex;align-items:center;justify-content:center}
+.shop-info{padding:20px}
+.shop-info span{font-size:9px;letter-spacing:.2em;color:#897c71}
+.shop-info h2{font-size:28px;margin:5px 0}
+.shop-info p{font-size:13px;color:var(--muted);margin-bottom:18px}
+.shop-row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.shop-price{font-weight:700;font-size:13px}
+.wa-btn{display:inline-flex;background:#241b17;color:#fff;padding:12px 16px;font-size:11px;font-weight:700}
+@media(max-width:800px){.product-grid-full{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.products-page{padding:55px 20px}.product-grid-full{grid-template-columns:1fr}.shop-visual{height:330px}}
+</style>
+</head>
+<body>
+<header class="site-header">
+<a class="logo" href="index.html">LELE'S <span>COSMETICS</span></a>
+<button class="menu-btn" aria-label="Open menu" aria-expanded="false">☰</button>
+<nav class="nav" id="nav">
+<a href="index.html">Home</a><a href="products.html">Products</a><a href="about.html">About Us</a><a href="index.html#contact">Contact</a>
+</nav>
+<a class="header-cta" href="https://wa.me/260978955714?text=Hello%20Lele's%20Cosmetics%2C%20I%20would%20like%20to%20place%20an%20order." target="_blank" rel="noopener">Order on WhatsApp</a>
+</header>
+
+<main class="products-page">
+<section class="products-hero">
+<p class="eyebrow">THE LELE'S COLLECTION</p>
+<h1>Find your <em>signature.</em></h1>
+<p>Explore our selection of perfumes and body oils, made for everyday confidence, freshness and personal expression. Choose your favourite and order directly on WhatsApp.</p>
+</section>
+
+<h2 class="category">Perfumes</h2>
+<div class="product-grid-full">
+<article class="shop-card"><div class="shop-visual visual-perfume"><div class="mini-bottle"><div class="mini-cap"></div><div class="mini-label">LELE'S<br><b>NOIR</b></div></div></div><div class="shop-info"><span>PERFUME</span><h2>Signature Noir</h2><p>A confident, elegant fragrance for memorable moments.</p><div class="shop-row"><strong class="shop-price">K100–K200</strong><a class="wa-btn" href="https://wa.me/260978955714?text=Hello%20Lele's%20Cosmetics%2C%20I%20want%20to%20order%20Signature%20Noir." target="_blank">Order on WhatsApp</a></div></div></article>
+<article class="shop-card"><div class="shop-visual visual-perfume-light"><div class="mini-bottle"><div class="mini-cap"></div><div class="mini-label">LELE'S<br><b>BLOOM</b></div></div></div><div class="shop-info"><span>PERFUME</span><h2>Soft Bloom</h2><p>A soft, fresh choice for everyday wear.</p><div class="shop-row"><strong class="shop-price">K100–K200</strong><a class="wa-btn" href="https://wa.me/260978955714?text=Hello%20Lele's%20Cosmetics%2C%20I%20want%20to%20order%20Soft%20Bloom." target="_blank">Order on WhatsApp</a></div></div></article>
+<article class="shop-card"><div class="shop-visual visual-perfume"><div class="mini-bottle"><div class="mini-cap"></div><div class="mini-label">LELE'S<br><b>ESSENCE</b></div></div></div><div class="shop-info"><span>PERFUME</span><h2>Lele's Essence</h2><p>A versatile fragrance for work, weekends and nights out.</p><div class="shop-row"><strong class="shop-price">K100–K200</strong><a class="wa-btn" href="https://wa.me/260978955714?text=Hello%20Lele's%20Cosmetics%2C%20I%20want%20to%20order%20Lele's%20Essence." target="_blank">Order on WhatsApp</a></div></div></article>
+</div>
+
+<h2 class="category">Body Oils</h2>
+<div class="product-grid-full">
+<article class="shop-card"><div class="shop-visual visual-oil"><div class="oil-bottle"><div class="oil-cap"></div><div class="oil-label">LELE'S<br><b>GLOW</b></div></div></div><div class="shop-info"><span>BODY OIL</span><h2>Golden Glow</h2><p>A nourishing-feeling body oil for a smooth, glowing finish.</p><div class="shop-row"><strong class="shop-price">K75–K100</strong><a class="wa-btn" href="https://wa.me/260978955714?text=Hello%20Lele's%20Cosmetics%2C%20I%20want%20to%20order%20Golden%20Glow%20Body%20Oil." target="_blank">Order on WhatsApp</a></div></div></article>
+<article class="shop-card"><div class="shop-visual visual-oil"><div class="oil-bottle"><div class="oil-cap"></div><div class="oil-label">LELE'S<br><b>VELVET</b></div></div></div><div class="shop-info"><span>BODY OIL</span><h2>Velvet Body Oil</h2><p>A simple everyday body-care ritual with a soft scented finish.</p><div class="shop-row"><strong class="shop-price">K75–K100</strong><a class="wa-btn" href="https://wa.me/260978955714?text=Hello%20Lele's%20Cosmetics%2C%20I%20want%20to%20order%20Velvet%20Body%20Oil." target="_blank">Order on WhatsApp</a></div></div></article>
+</div>
+</main>
+<footer><a class="logo" href="index.html">LELE'S <span>COSMETICS</span></a><p>© 2026 Lele's Cosmetics. Fragrance & body oils.</p><a href="index.html">Home ↑</a></footer>
+<script src="script.js"></script>
+</body></html>
