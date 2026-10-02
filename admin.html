@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lele's Cosmetics - Admin</title>
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,sans-serif;background:#f7f5f7;color:#20243a}
+    header{background:#20245f;color:#fff;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+    header h1{font-size:20px;margin:0}
+    .wrap{max-width:1200px;margin:0 auto;padding:20px}
+    .panel{background:#fff;border-radius:14px;padding:20px;box-shadow:0 4px 18px rgba(0,0,0,.07);margin-bottom:20px}
+    input,select,button{font:inherit}
+    input{width:100%;padding:12px;border:1px solid #ddd;border-radius:9px}
+    button{border:0;border-radius:9px;padding:11px 16px;cursor:pointer}
+    .primary{background:#20245f;color:#fff}
+    .danger{background:#a33;color:#fff}
+    .muted{color:#777}
+    .login{max-width:430px;margin:70px auto}
+    .login h2{margin-top:0}
+    .login button{width:100%;margin-top:10px}
+    .hidden{display:none!important}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .stat{background:#fff;border-radius:12px;padding:16px;box-shadow:0 3px 12px rgba(0,0,0,.05)}
+    .stat b{display:block;font-size:26px;margin-top:6px}
+    .toolbar{display:flex;gap:10px;align-items:center;margin-bottom:15px}
+    .toolbar input{flex:1}
+    .table-wrap{overflow:auto}
+    table{width:100%;border-collapse:collapse;min-width:850px}
+    th,td{text-align:left;padding:12px 10px;border-bottom:1px solid #eee;vertical-align:top}
+    th{font-size:13px;color:#666}
+    .status{padding:8px;border:1px solid #ddd;border-radius:8px}
+    .error{color:#a33;margin-top:10px}
+    .success{color:#176b36;margin-top:10px}
+    .small{font-size:13px}
+    @media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}.wrap{padding:12px}.panel{padding:14px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>Lele's Cosmetics — Admin</h1>
+  <button id="logoutBtn" class="danger hidden">Log out</button>
+</header>
+
+<main class="wrap">
+  <section id="loginPanel" class="panel login">
+    <h2>Admin Login</h2>
+    <p class="muted">Enter the admin key configured in Cloudflare.</p>
+    <input id="adminKey" type="password" placeholder="Admin key" autocomplete="current-password">
+    <button id="loginBtn" class="primary">Open Dashboard</button>
+    <div id="loginMsg" class="error"></div>
+  </section>
+
+  <section id="dashboard" class="hidden">
+    <div class="stats">
+      <div class="stat"><span>Total Orders</span><b id="totalOrders">0</b></div>
+      <div class="stat"><span>Pending</span><b id="pendingOrders">0</b></div>
+      <div class="stat"><span>Completed</span><b id="completedOrders">0</b></div>
+      <div class="stat"><span>Sales</span><b id="salesTotal">K0.00</b></div>
+    </div>
+
+    <div class="panel" style="margin-top:20px">
+      <div class="toolbar">
+        <input id="search" placeholder="Search order number, customer, phone or location">
+        <button id="refreshBtn" class="primary">Refresh</button>
+      </div>
+      <div id="msg" class="small"></div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Order</th>
+              <th>Customer</th>
+              <th>Delivery</th>
+              <th>Payment</th>
+              <th>Total</th>
+              <th>Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="ordersBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="admin.js"></script>
+</body>
+</html>

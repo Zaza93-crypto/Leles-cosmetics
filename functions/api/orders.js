@@ -99,17 +99,58 @@ export async function onRequestPost({ request, env }) {
   }
 }
 
-export async function onRequestGet({ env }) {
-  const result = await env.LELES_DB.prepare(
-    `SELECT o.id, o.order_number, o.payment_method, o.total, o.status,
-            o.notes, o.created_at, c.name, c.phone, c.delivery_location
-     FROM orders o
-     LEFT JOIN customers c ON c.id = o.customer_id
-     ORDER BY o.id DESC`
-  ).all();
+function authorized(request, env) {
+  const key = request.headers.get("X-Admin-Key");
+  return Boolean(env.ADMIN_KEY && key && key === env.ADMIN_KEY);
+}
 
-  return Response.json({
-    success: true,
-    orders: result.results || []
-  });
+export async function onRequestGet({ request, env }) {
+  if (!authorized(request, env)) {
+    return Response.json({ success: false, error: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    const result = await env.LELES_DB.prepare(
+      `SELECT o.id, o.order_number, o.payment_method, o.total, o.status,
+              o.notes, o.created_at, c.name, c.phone, c.delivery_location
+       FROM orders o
+       LEFT JOIN customers c ON c.id = o.customer_id
+       ORDER BY o.id DESC`
+    ).all();
+
+    return Response.json({
+      success: true,
+      orders: result.results || []
+    });
+  } catch (error) {
+    return Response.json({ success: false, error: error.message }, { status: 500 });
+  }
+}
+
+export async function onRequestPatch({ request, env }) {
+  if (!authorized(request, env)) {
+    return Response.json({ success: false, error: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    const data = await request.json();
+    const orderId = Number(data.order_id);
+    const status = String(data.status || "").trim();
+
+    const allowed = ["Pending", "Confirmed", "Completed", "Cancelled"];
+    if (!Number.isInteger(orderId) || !allowed.includes(status)) {
+      return Response.json({ success: false, error: "Invalid order ID or status" }, { status: 400 });
+    }
+
+    const result = await env.LELES_DB.prepare(
+      `UPDATE orders SET status = ? WHERE id = ?`
+    ).bind(status, orderId).run();
+
+    return Response.json({
+      success: true,
+      updated: result.meta?.changes || 0
+    });
+  } catch (error) {
+    return Response.json({ success: false, error: error.message }, { status: 500 });
+  }
 }
