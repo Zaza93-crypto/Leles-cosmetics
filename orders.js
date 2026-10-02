@@ -167,19 +167,32 @@ function adminAuthorized(request, env) {
 }
 
 export async function onRequestGet({ request, env }) {
-  if (!adminAuthorized(request, env)) {
-    return Response.json({ success: false, error: "Admin authorization required" }, { status: 401 });
+  if (adminAuthorized(request, env)) {
+    const result = await env.LELES_DB.prepare(
+      `SELECT o.id, o.order_number, o.payment_method, o.total, o.status,
+              o.notes, o.created_at, c.name, c.phone, c.delivery_location
+       FROM orders o
+       LEFT JOIN customers c ON c.id = o.customer_id
+       ORDER BY o.id DESC`
+    ).all();
+    return Response.json({ success: true, orders: result.results || [] });
   }
 
-  const result = await env.LELES_DB.prepare(
-    `SELECT o.id, o.order_number, o.payment_method, o.total, o.status,
-            o.notes, o.created_at, c.name, c.phone, c.delivery_location
-     FROM orders o
-     LEFT JOIN customers c ON c.id = o.customer_id
-     ORDER BY o.id DESC`
-  ).all();
+  const url = new URL(request.url);
+  const orderNumber = String(url.searchParams.get("order_number") || "").trim().toUpperCase();
+  if (!orderNumber) return Response.json({ success: false, error: "Order number is required" }, { status: 400 });
 
-  return Response.json({ success: true, orders: result.results || [] });
+  const result = await env.LELES_DB.prepare(
+    `SELECT o.order_number, o.total, o.status, o.created_at
+     FROM orders o WHERE UPPER(o.order_number) = ? LIMIT 1`
+  ).bind(orderNumber).all();
+  const order = (result.results || [])[0];
+  if (!order) return Response.json({ success: false, error: "Order not found. Check your order number." }, { status: 404 });
+
+  return Response.json({ success: true, order: {
+    order_number: order.order_number, total: Number(order.total || 0),
+    status: order.status, created_at: order.created_at
+  }});
 }
 
 export async function onRequestPatch({ request, env }) {
