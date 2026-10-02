@@ -584,6 +584,200 @@ function renderProducts() {
   renderSmartSections();
 }
 
+
+let APPLIED_COUPON = null;
+
+function getCouponCode() {
+  return (document.getElementById("couponCode")?.value || "").trim().toUpperCase();
+}
+
+function getCartSubtotal() {
+  return getCart().reduce((sum, x) => sum + Number(x.price || 0) * Number(x.qty || 0), 0);
+}
+
+function calculateCouponDiscount(coupon, subtotal) {
+  if (!coupon || !coupon.active) return 0;
+
+  if (coupon.expires_at) {
+    const expiry = new Date(coupon.expires_at);
+    if (!Number.isNaN(expiry.getTime()) && expiry <= new Date()) return 0;
+  }
+
+  const minOrder = Number(coupon.min_order || 0);
+  if (subtotal < minOrder) return 0;
+
+  const maxUses = Number(coupon.max_uses || 0);
+  const uses = Number(coupon.uses || 0);
+  if (maxUses > 0 && uses >= maxUses) return 0;
+
+  let discount = 0;
+  if (coupon.discount_type === "percentage") {
+    discount = subtotal * (Number(coupon.discount_value) / 100);
+  } else if (coupon.discount_type === "fixed") {
+    discount = Number(coupon.discount_value);
+  }
+
+  return Math.max(0, Math.min(discount, subtotal));
+}
+
+function renderCouponSummary() {
+  const box = document.getElementById("couponSummary");
+  if (!box) return;
+
+  const subtotal = getCartSubtotal();
+  const discount = APPLIED_COUPON ? calculateCouponDiscount(APPLIED_COUPON, subtotal) : 0;
+  const total = Math.max(0, subtotal - discount);
+
+  if (APPLIED_COUPON && discount > 0) {
+    box.innerHTML = `
+      <div style="display:flex;justify-content:space-between"><span>Subtotal</span><strong>${money(subtotal)}</strong></div>
+      <div style="display:flex;justify-content:space-between;color:#168044"><span>Coupon (${escapeHtml(APPLIED_COUPON.code)})</span><strong>-${money(discount)}</strong></div>
+      <div style="display:flex;justify-content:space-between;font-size:1.08rem;margin-top:7px;padding-top:7px;border-top:1px solid #eadfe4"><span>Total</span><strong>${money(total)}</strong></div>
+    `;
+  } else {
+    box.innerHTML = `
+      <div style="display:flex;justify-content:space-between"><span>Total</span><strong>${money(subtotal)}</strong></div>
+    `;
+  }
+}
+
+async function applyCoupon() {
+  const input = document.getElementById("couponCode");
+  const message = document.getElementById("couponMessage");
+  const button = document.getElementById("applyCouponBtn");
+
+  if (!input || !message) return;
+
+  const code = input.value.trim().toUpperCase();
+  if (!code) {
+    APPLIED_COUPON = null;
+    message.textContent = "Enter a coupon code.";
+    message.style.color = "#b25b20";
+    renderCouponSummary();
+    return;
+  }
+
+  if (button) {
+    button.disabled = true;
+    button.textContent = "Checking...";
+  }
+
+  try {
+    const response = await fetch(API_BASE + "/coupons");
+    const result = await response.json();
+
+    if (!response.ok || !result.success) {
+      throw new Error(result.error || "Could not check coupon.");
+    }
+
+    const coupon = (result.coupons || []).find(
+      c => String(c.code || "").trim().toUpperCase() === code
+    );
+
+    if (!coupon || Number(coupon.active) !== 1) {
+      APPLIED_COUPON = null;
+      message.textContent = "Invalid or inactive coupon code.";
+      message.style.color = "#b25b20";
+      renderCouponSummary();
+      return;
+    }
+
+    const subtotal = getCartSubtotal();
+    const minOrder = Number(coupon.min_order || 0);
+    if (subtotal < minOrder) {
+      APPLIED_COUPON = null;
+      message.textContent = `Minimum order for this coupon is ${money(minOrder)}.`;
+      message.style.color = "#b25b20";
+      renderCouponSummary();
+      return;
+    }
+
+    const maxUses = Number(coupon.max_uses || 0);
+    const uses = Number(coupon.uses || 0);
+    if (maxUses > 0 && uses >= maxUses) {
+      APPLIED_COUPON = null;
+      message.textContent = "This coupon has reached its usage limit.";
+      message.style.color = "#b25b20";
+      renderCouponSummary();
+      return;
+    }
+
+    if (coupon.expires_at) {
+      const expiry = new Date(coupon.expires_at);
+      if (!Number.isNaN(expiry.getTime()) && expiry <= new Date()) {
+        APPLIED_COUPON = null;
+        message.textContent = "This coupon has expired.";
+        message.style.color = "#b25b20";
+        renderCouponSummary();
+        return;
+      }
+    }
+
+    const discount = calculateCouponDiscount(coupon, subtotal);
+    if (discount <= 0) {
+      APPLIED_COUPON = null;
+      message.textContent = "This coupon cannot be applied to the current order.";
+      message.style.color = "#b25b20";
+      renderCouponSummary();
+      return;
+    }
+
+    APPLIED_COUPON = coupon;
+    message.textContent = `Coupon applied! You save ${money(discount)}.`;
+    message.style.color = "#168044";
+    renderCouponSummary();
+  } catch (error) {
+    console.error("Coupon error:", error);
+    APPLIED_COUPON = null;
+    message.textContent = "Could not check the coupon. Please try again.";
+    message.style.color = "#b25b20";
+    renderCouponSummary();
+  } finally {
+    if (button) {
+      button.disabled = false;
+      button.textContent = "Apply";
+    }
+  }
+}
+
+function addCouponCheckoutUI() {
+  if (document.getElementById("couponCheckoutCard")) return;
+
+  const form = document.getElementById("checkoutForm");
+  if (!form) return;
+
+  const card = document.createElement("div");
+  card.id = "couponCheckoutCard";
+  card.className = "checkout-card";
+  card.style.marginTop = "14px";
+  card.innerHTML = `
+    <h3 style="margin:0 0 8px;color:#321526">🎟️ Have a coupon?</h3>
+    <p style="margin:0 0 12px;color:#6b6268;font-size:.9rem">Enter your coupon code to see your discount.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <input id="couponCode" type="text" placeholder="Coupon code"
+        autocomplete="off" style="flex:1;min-width:180px;text-transform:uppercase">
+      <button id="applyCouponBtn" type="button"
+        style="border:0;border-radius:10px;padding:11px 18px;background:#8f315d;color:#fff;font-weight:700;cursor:pointer">
+        Apply
+      </button>
+    </div>
+    <div id="couponMessage" style="margin-top:8px;font-size:.88rem"></div>
+    <div id="couponSummary" style="margin-top:14px;padding-top:12px;border-top:1px solid #eadfe4"></div>
+  `;
+
+  form.insertAdjacentElement("beforebegin", card);
+
+  document.getElementById("applyCouponBtn")?.addEventListener("click", applyCoupon);
+  document.getElementById("couponCode")?.addEventListener("keydown", e => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      applyCoupon();
+    }
+  });
+
+  renderCouponSummary();
+}
+
 async function submitOrder(event) {
   event.preventDefault();
 
@@ -616,6 +810,7 @@ async function submitOrder(event) {
     },
     payment_method: payment.value,
     notes: notes?.value.trim() || "",
+    coupon_code: APPLIED_COUPON ? String(APPLIED_COUPON.code) : "",
     items: cart.map(x => ({
       product_id: Number(x.id),
       quantity: Number(x.qty)
@@ -650,11 +845,19 @@ async function submitOrder(event) {
       `${x.name} x${x.qty} = ${money(Number(x.price) * Number(x.qty))}`
     ).join("\n");
 
+    const clientSubtotal = getCartSubtotal();
+    const couponDiscount = APPLIED_COUPON
+      ? calculateCouponDiscount(APPLIED_COUPON, clientSubtotal)
+      : 0;
+    const displayedTotal = Math.max(0, clientSubtotal - couponDiscount);
+
     const message =
       `Hello Lele's Cosmetics!\n\n` +
       `I have placed order ${result.order_number}.\n\n` +
       `${lines}\n\n` +
-      `Total: ${money(result.total)}\n` +
+      `Subtotal: ${money(clientSubtotal)}\n` +
+      (APPLIED_COUPON ? `Coupon: ${APPLIED_COUPON.code}\nDiscount: -${money(couponDiscount)}\n` : "") +
+      `Total: ${money(displayedTotal)}\n` +
       `Name: ${payload.customer.name}\n` +
       `Phone: ${payload.customer.phone}\n` +
       `Delivery: ${payload.customer.delivery_location}\n` +
@@ -662,6 +865,7 @@ async function submitOrder(event) {
       (payload.notes ? `\nNotes: ${payload.notes}` : "");
 
     localStorage.removeItem("leles_cart");
+    APPLIED_COUPON = null;
     updateCartCount();
     renderCart();
 
@@ -670,7 +874,7 @@ async function submitOrder(event) {
 
     showOrderConfirmation(
       result.order_number,
-      result.total,
+      displayedTotal,
       payload.payment_method,
       whatsappUrl
     );
@@ -740,6 +944,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const checkoutForm = document.getElementById("checkoutForm");
 
   if (checkoutForm) {
+    addCouponCheckoutUI();
     checkoutForm.addEventListener("submit", submitOrder);
   }
 });
