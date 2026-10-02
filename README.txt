@@ -1,22 +1,17 @@
-LELE'S COSMETICS — PRODUCT & STOCK MANAGEMENT
+LELE'S COSMETICS — CUSTOMER SHOP VISUAL UPGRADE
 
-Upload/replace these exact paths:
-1. admin.html -> repository root
-2. admin.js -> repository root
-3. functions/api/products.js -> replace existing products.js
-4. functions/api/orders.js -> replace existing orders.js
+Replace these files in the repository root:
+- products.html
+- styles.css
+- script.js
 
-Do NOT delete the LELES_DB binding.
-Keep ADMIN_KEY as a Cloudflare Secret.
+This upgrade:
+- keeps the existing D1 product API
+- keeps the existing cart storage
+- adds search and category filtering
+- displays image_url from D1 when available
+- uses a clean placeholder when no image URL is set
+- improves desktop and mobile presentation
+- keeps Add to cart functionality
 
-After deployment:
-https://leles-cosmetics.pages.dev/admin.html
-
-The customer GET /api/products remains public.
-Admin product POST/PATCH and order GET/PATCH require X-Admin-Key.
-
-Stock:
-- Admin sets stock from Products & Stock.
-- New orders are rejected when requested quantity exceeds stock.
-- Stock is reduced when a new order is created.
-- Existing test orders are not changed.
+Do not replace admin.html, admin.js, functions/api/orders.js or functions/api/products.js with this package.

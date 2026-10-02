@@ -1,22 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Products | Lele's Cosmetics</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lele's Cosmetics — Products</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header class="site-header">
-  <div class="brand">Lele's Cosmetics</div>
-  <nav><a href="index.html">Home</a><a href="products.html">Products</a><a href="cart.html">Cart <span id="cartCount">0</span></a></nav>
-</header>
-<main class="container">
-  <h1>Our Products</h1>
-  <p class="muted">Choose your favourites and add them to your cart.</p>
-  <div id="products" class="product-grid"></div>
-</main>
-<script src="script.js"></script>
-<script>renderProducts();</script>
+  <header class="site-header">
+    <div class="nav-wrap">
+      <a class="brand" href="index.html">Lele's <span>Cosmetics</span></a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a class="active" href="products.html">Products</a>
+        <a href="about.html">About</a>
+        <a class="cart-link" href="cart.html">Cart <span id="cartCount">0</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="shop-page">
+    <section class="shop-hero">
+      <div>
+        <p class="eyebrow">LELE'S COSMETICS</p>
+        <h1>Find your signature scent.</h1>
+        <p>Shop perfumes and body oils made to leave a lasting impression.</p>
+      </div>
+      <a class="hero-cart" href="cart.html">View Cart</a>
+    </section>
+
+    <section class="catalogue">
+      <div class="catalogue-top">
+        <div>
+          <h2>Our Collection</h2>
+          <p id="resultCount">Loading products...</p>
+        </div>
+        <div class="controls">
+          <input id="productSearch" type="search" placeholder="Search products...">
+          <select id="categoryFilter">
+            <option value="all">All products</option>
+            <option value="Perfume">Perfumes</option>
+            <option value="Body Oil">Body Oils</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="products" class="product-grid"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© Lele's Cosmetics. Beauty that stays with you.</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
