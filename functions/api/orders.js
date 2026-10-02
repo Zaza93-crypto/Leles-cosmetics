@@ -1,7 +1,7 @@
 export async function onRequestPost({ request, env }) {
   try {
     const data = await request.json();
-    const { customer, items, payment_method, notes = "" } = data;
+    const { customer, items, payment_method, notes = "", coupon_code = "" } = data;
 
     if (!customer?.name || !customer?.phone || !customer?.delivery_location) {
       return Response.json({ success: false, error: "Customer name, phone and delivery location are required" }, { status: 400 });
@@ -50,6 +50,60 @@ export async function onRequestPost({ request, env }) {
       });
     }
 
+    // Validate and calculate coupon discount server-side.
+    // Never trust the discount calculated in the browser.
+    let coupon = null;
+    let discount = 0;
+    const couponCode = String(coupon_code || "").trim().toUpperCase();
+
+    if (couponCode) {
+      const couponResult = await env.LELES_DB.prepare(
+        `SELECT id, code, discount_type, discount_value, min_order,
+                max_uses, uses, expires_at, active
+         FROM coupons
+         WHERE UPPER(code) = ?
+         LIMIT 1`
+      ).bind(couponCode).all();
+
+      coupon = (couponResult.results || [])[0] || null;
+
+      if (!coupon || Number(coupon.active) !== 1) {
+        return Response.json({ success: false, error: "Invalid or inactive coupon code" }, { status: 400 });
+      }
+
+      const minOrder = Number(coupon.min_order || 0);
+      if (total < minOrder) {
+        return Response.json({
+          success: false,
+          error: `Minimum order for this coupon is K${minOrder.toFixed(2)}`
+        }, { status: 400 });
+      }
+
+      const maxUses = Number(coupon.max_uses || 0);
+      const uses = Number(coupon.uses || 0);
+      if (maxUses > 0 && uses >= maxUses) {
+        return Response.json({ success: false, error: "This coupon has reached its usage limit" }, { status: 400 });
+      }
+
+      if (coupon.expires_at) {
+        const expiry = new Date(coupon.expires_at);
+        if (!Number.isNaN(expiry.getTime()) && expiry <= new Date()) {
+          return Response.json({ success: false, error: "This coupon has expired" }, { status: 400 });
+        }
+      }
+
+      const value = Number(coupon.discount_value || 0);
+
+      if (coupon.discount_type === "percentage") {
+        discount = total * (value / 100);
+      } else if (coupon.discount_type === "fixed") {
+        discount = value;
+      }
+
+      discount = Math.max(0, Math.min(discount, total));
+      total = Math.max(0, total - discount);
+    }
+
     const orderNumber = "LELE-" + Date.now().toString(36).toUpperCase();
 
     const customerResult = await env.LELES_DB.prepare(
@@ -62,7 +116,15 @@ export async function onRequestPost({ request, env }) {
     const orderResult = await env.LELES_DB.prepare(
       `INSERT INTO orders (order_number, customer_id, payment_method, total, status, notes)
        VALUES (?, ?, ?, ?, 'Pending', ?)`
-    ).bind(orderNumber, customerId, payment_method, total, notes).run();
+    ).bind(
+        orderNumber,
+        customerId,
+        payment_method,
+        total,
+        coupon
+          ? `${notes}${notes ? "\n" : ""}Coupon: ${coupon.code} | Discount: K${discount.toFixed(2)}`
+          : notes
+      ).run();
 
     const orderId = orderResult.meta.last_row_id;
 
@@ -76,11 +138,20 @@ export async function onRequestPost({ request, env }) {
 
     if (statements.length) await env.LELES_DB.batch(statements);
 
+    if (coupon) {
+      await env.LELES_DB.prepare(
+        `UPDATE coupons SET uses = uses + 1 WHERE id = ?`
+      ).bind(Number(coupon.id)).run();
+    }
+
     return Response.json({
       success: true,
       order_number: orderNumber,
       order_id: orderId,
       total,
+      subtotal: coupon ? total + discount : total,
+      discount,
+      coupon_code: coupon ? coupon.code : null,
       status: "Pending"
     });
   } catch (error) {
