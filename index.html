@@ -1,233 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Lele's Cosmetics — perfumes and body oils for every mood, every moment.">
-  <title>Lele's Cosmetics | Fragrance & Body Oils</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lele's Cosmetics</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="site-header">
-    <a class="logo" href="#home">LELE'S <span>COSMETICS</span></a>
-    <button class="menu-btn" aria-label="Open menu" aria-expanded="false">☰</button>
-    <nav class="nav" id="nav">
-      <a href="#home">Home</a>
-      <a href="#collection">Collection</a>
-      <a href="#story">About Us</a>
-      <a href="#contact">Contact</a>
-    </nav>
-    <a class="header-cta" href="#collection">Shop Collection</a>
-  </header>
+<header class="site-header">
+  <div class="brand">Lele's Cosmetics</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="products.html">Products</a>
+    <a href="cart.html">Cart <span id="cartCount">0</span></a>
+  </nav>
+</header>
 
-  <main>
-    <section class="hero" id="home">
-      <div class="hero-copy">
-        <p class="eyebrow">FRAGRANCE • BODY • EVERYDAY LUXURY</p>
-        <h1>Wear your<br><em>signature.</em></h1>
-        <p class="hero-text">
-          Discover perfumes and body oils selected to help you feel fresh,
-          confident and unforgettable — without making luxury complicated.
-        </p>
-        <div class="hero-actions">
-          <a class="btn btn-dark" href="#collection">Explore collection</a>
-          <a class="text-link" href="#story">Our story <span>→</span></a>
-        </div>
-      </div>
+<main class="hero">
+  <p class="eyebrow">PERFUMES • BODY OILS</p>
+  <h1>Smell good. Feel good. Be unforgettable.</h1>
+  <p>Quality perfumes and body oils, available in Lundazi with local delivery.</p>
+  <a class="btn" href="products.html">Shop now</a>
+</main>
 
-      <div class="hero-collage" aria-label="Lele's Cosmetics fragrance collection">
-        <div class="tile tile-dark">
-          <span class="tile-label">LELE'S</span>
-          <strong>SCENT<br>IS YOUR<br>STATEMENT.</strong>
-        </div>
-        <div class="tile tile-bottle bottle-one">
-          <div class="bottle">
-            <div class="cap"></div><div class="liquid"></div>
-            <div class="bottle-label"><small>LELE'S</small><b>Signature</b><span>EAU DE PARFUM</span></div>
-          </div>
-        </div>
-        <div class="tile tile-flower">
-          <span class="flower flower-a">✿</span>
-          <span class="flower flower-b">✽</span>
-          <span class="flower flower-c">❀</span>
-        </div>
-        <div class="tile tile-body">
-          <p>A scented<br><em>ritual</em> for<br>skin & body.</p>
-          <span>BODY OILS • SOFT SKIN • GLOW</span>
-        </div>
-        <div class="tile tile-bottle bottle-two">
-          <div class="bottle bottle-small">
-            <div class="cap"></div><div class="liquid"></div>
-            <div class="bottle-label"><small>LELE'S</small><b>Velvet</b><span>BODY OIL</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="manifesto" id="story">
-      <div>
-        <p class="eyebrow">THE LELE'S EDIT</p>
-        <h2>Fragrance that feels<br><em>like you.</em></h2>
-      </div>
-      <p>
-        At Lele's Cosmetics, we believe a good scent is more than fragrance.
-        It is confidence, comfort and personal expression. Our collection brings
-        together easy-to-love perfumes and body oils for both women and men.
-      </p>
-    </section>
-
-    <section class="collection" id="collection">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">SHOP THE COLLECTION</p>
-          <h2>Find your everyday favourite.</h2>
-        </div>
-        <a class="text-link" href="products.html">View all products <span>→</span></a>
-      </div>
-
-      <div class="product-grid">
-        <article class="product-card">
-          <div class="product-visual visual-perfume">
-            <div class="mini-bottle"><div class="mini-cap"></div><div class="mini-label">LELE'S<br><b>NOIR</b></div></div>
-          </div>
-          <div class="product-info"><div><span>PERFUME</span><h3>Signature Noir</h3></div><strong>K100–K200</strong></div>
-        </article>
-        <article class="product-card">
-          <div class="product-visual visual-perfume-light">
-            <div class="mini-bottle"><div class="mini-cap"></div><div class="mini-label">LELE'S<br><b>BLOOM</b></div></div>
-          </div>
-          <div class="product-info"><div><span>PERFUME</span><h3>Soft Bloom</h3></div><strong>K100–K200</strong></div>
-        </article>
-        <article class="product-card">
-          <div class="product-visual visual-oil">
-            <div class="oil-bottle"><div class="oil-cap"></div><div class="oil-label">LELE'S<br><b>GLOW</b></div></div>
-          </div>
-          <div class="product-info"><div><span>BODY OIL</span><h3>Golden Glow</h3></div><strong>K75–K100</strong></div>
-        </article>
-      </div>
-    </section>
-
-    <section class="experience">
-      <div class="experience-image">
-        <div class="big-bottle"><div class="big-cap"></div><div class="big-label">LELE'S<br><b>ESSENCE</b><small>FRAGRANCE</small></div></div>
-      </div>
-      <div class="experience-copy">
-        <p class="eyebrow">MADE FOR YOUR MOMENT</p>
-        <h2>Good scent.<br><em>Good energy.</em></h2>
-        <p>
-          From a busy workday to a night out, choose a scent that matches the
-          moment. Shop online and enjoy convenient local delivery in Lundazi.
-        </p>
-        <a class="btn btn-dark" href="products.html">Shop perfumes & oils</a>
-      </div>
-    </section>
-
-    <section class="contact-strip" id="contact">
-      <div>
-        <p class="eyebrow">READY TO FIND YOUR SCENT?</p>
-        <h2>Let's make your everyday<br><em>feel a little better.</em></h2>
-      </div>
-      <div class="contact-actions">
-        <a class="btn btn-light" href="https://wa.me/260978955714" target="_blank" rel="noopener">Order on WhatsApp</a>
-        <p>Mobile Money • Cash on Delivery<br>Local delivery • Lundazi</p>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <a class="logo" href="#home">LELE'S <span>COSMETICS</span></a>
-    <p>© 2026 Lele's Cosmetics. Fragrance & body oils.</p>
-    <a href="#home">Back to top ↑</a>
-  </footer>
-
-  <script src="script.js"></script>
-
-  <!-- Lele's Cosmetics AI-style customer assistant -->
-  <button class="lele-chat-toggle" id="leleChatToggle" aria-label="Open Lele's assistant">
-    <span>💬</span>
-    <b>Ask Lele's</b>
-  </button>
-
-  <aside class="lele-chat" id="leleChat" aria-label="Lele's Cosmetics Assistant" aria-hidden="true">
-    <div class="lele-chat-header">
-      <div>
-        <strong>Lele's Assistant</strong>
-        <small>Perfumes • Body Oils • Orders</small>
-      </div>
-      <button id="leleChatClose" aria-label="Close chat">×</button>
-    </div>
-
-    <div class="lele-chat-messages" id="leleChatMessages">
-      <div class="lele-message bot">
-        Hi 👋 Welcome to Lele's Cosmetics! I can help you choose a perfume or body oil, check prices, or place an order.
-      </div>
-      <div class="lele-quick-actions">
-        <button data-question="What perfumes do you have?">Perfumes</button>
-        <button data-question="What body oils do you have?">Body oils</button>
-        <button data-question="How do I order?">How to order</button>
-      </div>
-    </div>
-
-    <form class="lele-chat-form" id="leleChatForm">
-      <input id="leleChatInput" type="text" placeholder="Ask about perfumes, oils or orders..." autocomplete="off">
-      <button type="submit" aria-label="Send message">➤</button>
-    </form>
-  </aside>
-
-  <style>
-    .lele-chat-toggle {
-      position: fixed; right: 20px; bottom: 20px; z-index: 9998;
-      border: 0; border-radius: 999px; padding: 13px 18px;
-      background: #111; color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,.22);
-      cursor: pointer; display: flex; gap: 8px; align-items: center; font: inherit;
-    }
-    .lele-chat-toggle span { font-size: 20px; }
-    .lele-chat {
-      position: fixed; right: 20px; bottom: 78px; width: min(360px, calc(100vw - 30px));
-      height: 500px; z-index: 9999; background: #fff; border-radius: 20px;
-      box-shadow: 0 18px 55px rgba(0,0,0,.25); overflow: hidden;
-      display: none; flex-direction: column; border: 1px solid #eee;
-      font-family: Arial, sans-serif;
-    }
-    .lele-chat.open { display: flex; }
-    .lele-chat-header {
-      background: #111; color: #fff; padding: 16px; display: flex;
-      justify-content: space-between; align-items: center;
-    }
-    .lele-chat-header strong { display:block; font-size: 16px; }
-    .lele-chat-header small { display:block; opacity:.72; margin-top:4px; }
-    .lele-chat-header button {
-      background: transparent; color:#fff; border:0; font-size:28px; cursor:pointer;
-    }
-    .lele-chat-messages {
-      flex:1; overflow-y:auto; padding:14px; background:#faf8f6;
-    }
-    .lele-message {
-      max-width: 86%; padding:11px 13px; border-radius:15px; margin-bottom:10px;
-      line-height:1.45; font-size:14px; white-space:pre-line;
-    }
-    .lele-message.bot { background:#fff; border:1px solid #eee; }
-    .lele-message.user { background:#111; color:#fff; margin-left:auto; }
-    .lele-quick-actions { display:flex; flex-wrap:wrap; gap:7px; margin:5px 0 10px; }
-    .lele-quick-actions button {
-      border:1px solid #ddd; background:#fff; border-radius:20px; padding:8px 10px;
-      cursor:pointer; font-size:12px;
-    }
-    .lele-chat-form { display:flex; border-top:1px solid #eee; background:#fff; }
-    .lele-chat-form input {
-      flex:1; border:0; outline:0; padding:14px; font-size:14px; min-width:0;
-    }
-    .lele-chat-form button {
-      width:50px; border:0; background:#111; color:#fff; cursor:pointer; font-size:18px;
-    }
-    @media (max-width: 480px) {
-      .lele-chat { right:10px; bottom:72px; width:calc(100vw - 20px); height:65vh; }
-      .lele-chat-toggle { right:12px; bottom:12px; }
-    }
-  </style>
-
+<section class="info">
+  <div><h3>Easy ordering</h3><p>Add your favourites to cart and checkout from your phone.</p></div>
+  <div><h3>Local delivery</h3><p>We deliver locally in Lundazi.</p></div>
+  <div><h3>Payment</h3><p>Mobile Money or Cash on Delivery.</p></div>
+</section>
+<script src="script.js"></script>
 </body>
 </html>

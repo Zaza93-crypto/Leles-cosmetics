@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cart | Lele's Cosmetics</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="brand">Lele's Cosmetics</div>
+  <nav><a href="index.html">Home</a><a href="products.html">Products</a><a href="cart.html">Cart <span id="cartCount">0</span></a></nav>
+</header>
+<main class="container">
+  <h1>Your Cart</h1>
+  <div id="cart"></div>
+  <div class="checkout">
+    <h2>Checkout</h2>
+    <form id="checkoutForm">
+      <input id="customerName" placeholder="Full name" required>
+      <input id="phone" placeholder="Phone number" required>
+      <input id="location" placeholder="Delivery location" required>
+      <select id="payment" required><option value="">Payment method</option><option>Mobile Money</option><option>Cash on Delivery</option></select>
+      <textarea id="notes" placeholder="Order notes (optional)"></textarea>
+      <button class="btn" type="submit">Place Order on WhatsApp</button>
+    </form>
+  </div>
+</main>
+<script src="script.js"></script>
+<script>renderCart();</script>
+</body>
+</html>
