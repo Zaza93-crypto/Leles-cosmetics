@@ -1,8 +1,3 @@
-function authorized(request, env) {
-  const key = request.headers.get("X-Admin-Key");
-  return Boolean(env.ADMIN_KEY && key && key === env.ADMIN_KEY);
-}
-
 export async function onRequestPost({ request, env }) {
   try {
     const data = await request.json();
@@ -18,8 +13,8 @@ export async function onRequestPost({ request, env }) {
       return Response.json({ success: false, error: "Payment method is required" }, { status: 400 });
     }
 
-    const ids = items.map(x => Number(x.product_id));
-    if (!ids.every(Number.isInteger)) {
+    const ids = items.map(x => Number(x.product_id)).filter(Number.isInteger);
+    if (!ids.length) {
       return Response.json({ success: false, error: "Invalid products" }, { status: 400 });
     }
 
@@ -76,19 +71,10 @@ export async function onRequestPost({ request, env }) {
         `INSERT INTO order_items
          (order_id, product_id, product_name, quantity, unit_price, subtotal)
          VALUES (?, ?, ?, ?, ?, ?)`
-      ).bind(
-        orderId,
-        item.product_id,
-        item.product_name,
-        item.quantity,
-        item.unit_price,
-        item.subtotal
-      )
+      ).bind(orderId, item.product_id, item.product_name, item.quantity, item.unit_price, item.subtotal)
     );
 
-    if (statements.length) {
-      await env.LELES_DB.batch(statements);
-    }
+    if (statements.length) await env.LELES_DB.batch(statements);
 
     return Response.json({
       success: true,
@@ -102,36 +88,39 @@ export async function onRequestPost({ request, env }) {
   }
 }
 
+function adminAuthorized(request, env) {
+  const expected = env.ADMIN_KEY;
+  if (!expected) return false;
+  const supplied = request.headers.get("X-Admin-Key") || "";
+  return supplied === expected;
+}
+
 export async function onRequestGet({ request, env }) {
-  if (!authorized(request, env)) {
-    return Response.json({ success: false, error: "Unauthorized" }, { status: 401 });
+  if (!adminAuthorized(request, env)) {
+    return Response.json({ success: false, error: "Admin authorization required" }, { status: 401 });
   }
 
-  try {
-    const result = await env.LELES_DB.prepare(
-      `SELECT o.id, o.order_number, o.payment_method, o.total, o.status,
-              o.notes, o.created_at, c.name, c.phone, c.delivery_location
-       FROM orders o
-       LEFT JOIN customers c ON c.id = o.customer_id
-       ORDER BY o.id DESC`
-    ).all();
+  const result = await env.LELES_DB.prepare(
+    `SELECT o.id, o.order_number, o.payment_method, o.total, o.status,
+            o.notes, o.created_at, c.name, c.phone, c.delivery_location
+     FROM orders o
+     LEFT JOIN customers c ON c.id = o.customer_id
+     ORDER BY o.id DESC`
+  ).all();
 
-    return Response.json({ success: true, orders: result.results || [] });
-  } catch (error) {
-    return Response.json({ success: false, error: error.message }, { status: 500 });
-  }
+  return Response.json({ success: true, orders: result.results || [] });
 }
 
 export async function onRequestPatch({ request, env }) {
-  if (!authorized(request, env)) {
-    return Response.json({ success: false, error: "Unauthorized" }, { status: 401 });
+  if (!adminAuthorized(request, env)) {
+    return Response.json({ success: false, error: "Admin authorization required" }, { status: 401 });
   }
 
   try {
     const data = await request.json();
     const orderId = Number(data.order_id);
     const status = String(data.status || "").trim();
-    const allowed = ["Pending", "Confirmed", "Completed", "Cancelled"];
+    const allowed = ["Pending", "Confirmed", "Preparing", "Out for Delivery", "Delivered", "Cancelled"];
 
     if (!Number.isInteger(orderId) || !allowed.includes(status)) {
       return Response.json({ success: false, error: "Invalid order ID or status" }, { status: 400 });
@@ -143,7 +132,8 @@ export async function onRequestPatch({ request, env }) {
 
     return Response.json({
       success: true,
-      updated: result.meta?.changes || 0
+      changed: Number(result.meta?.changes || 0),
+      status
     });
   } catch (error) {
     return Response.json({ success: false, error: error.message }, { status: 500 });
