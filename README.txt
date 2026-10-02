@@ -1,26 +1,22 @@
-LELE'S COSMETICS V2
-====================
-Upload all files to the root of your GitHub Pages repository.
+LELE'S COSMETICS — PRODUCT & STOCK MANAGEMENT
 
-Files:
-- index.html
-- products.html
-- cart.html
-- script.js
-- styles.css
+Upload/replace these exact paths:
+1. admin.html -> repository root
+2. admin.js -> repository root
+3. functions/api/products.js -> replace existing products.js
+4. functions/api/orders.js -> replace existing orders.js
 
-Current catalogue is based on the live Lele's Cosmetics site:
-Perfumes: K100-K200
-Body oils: K75-K100
-WhatsApp: +260 978 955 714
+Do NOT delete the LELES_DB binding.
+Keep ADMIN_KEY as a Cloudflare Secret.
 
-This version adds:
-- Product catalogue
-- Add to cart
-- Quantity controls
-- Persistent browser cart
-- Checkout form
-- WhatsApp order generation
+After deployment:
+https://leles-cosmetics.pages.dev/admin.html
 
-NEXT DEVELOPMENT:
-Connect the catalogue and orders to a shared cloud database and build an admin dashboard so data entered on one device appears on other devices.
+The customer GET /api/products remains public.
+Admin product POST/PATCH and order GET/PATCH require X-Admin-Key.
+
+Stock:
+- Admin sets stock from Products & Stock.
+- New orders are rejected when requested quantity exceeds stock.
+- Stock is reduced when a new order is created.
+- Existing test orders are not changed.

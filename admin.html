@@ -1,91 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lele's Cosmetics - Admin</title>
-  <style>
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Arial,sans-serif;background:#f7f5f7;color:#20243a}
-    header{background:#20245f;color:#fff;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px}
-    header h1{font-size:20px;margin:0}
-    .wrap{max-width:1200px;margin:0 auto;padding:20px}
-    .panel{background:#fff;border-radius:14px;padding:20px;box-shadow:0 4px 18px rgba(0,0,0,.07);margin-bottom:20px}
-    input,select,button{font:inherit}
-    input{width:100%;padding:12px;border:1px solid #ddd;border-radius:9px}
-    button{border:0;border-radius:9px;padding:11px 16px;cursor:pointer}
-    .primary{background:#20245f;color:#fff}
-    .danger{background:#a33;color:#fff}
-    .muted{color:#777}
-    .login{max-width:430px;margin:70px auto}
-    .login h2{margin-top:0}
-    .login button{width:100%;margin-top:10px}
-    .hidden{display:none!important}
-    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-    .stat{background:#fff;border-radius:12px;padding:16px;box-shadow:0 3px 12px rgba(0,0,0,.05)}
-    .stat b{display:block;font-size:26px;margin-top:6px}
-    .toolbar{display:flex;gap:10px;align-items:center;margin-bottom:15px}
-    .toolbar input{flex:1}
-    .table-wrap{overflow:auto}
-    table{width:100%;border-collapse:collapse;min-width:850px}
-    th,td{text-align:left;padding:12px 10px;border-bottom:1px solid #eee;vertical-align:top}
-    th{font-size:13px;color:#666}
-    .status{padding:8px;border:1px solid #ddd;border-radius:8px}
-    .error{color:#a33;margin-top:10px}
-    .success{color:#176b36;margin-top:10px}
-    .small{font-size:13px}
-    @media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}.wrap{padding:12px}.panel{padding:14px}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lele's Cosmetics — Admin</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f7f5f7;color:#20243a}
+header{background:#20245f;color:#fff;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;gap:10px;position:sticky;top:0;z-index:5}
+header h1{font-size:20px;margin:0}.wrap{max-width:1200px;margin:auto;padding:16px}
+.panel{background:#fff;border-radius:14px;padding:18px;box-shadow:0 4px 18px rgba(0,0,0,.07);margin-bottom:18px}
+input,select,button,textarea{font:inherit}input,select,textarea{width:100%;padding:11px;border:1px solid #ddd;border-radius:9px}
+button{border:0;border-radius:9px;padding:11px 15px;cursor:pointer}.primary{background:#20245f;color:#fff}.danger{background:#a33;color:#fff}.muted{color:#777}.hidden{display:none!important}
+.login{max-width:430px;margin:60px auto}.login h2{margin-top:0}.login button{width:100%;margin-top:10px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.stat{background:#fff;border-radius:12px;padding:15px;box-shadow:0 3px 12px rgba(0,0,0,.05)}.stat b{display:block;font-size:25px;margin-top:5px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.tab{background:#eee;color:#20243a}.tab.active{background:#20245f;color:#fff}
+.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:wrap}
+.toolbar{display:flex;gap:10px;margin-bottom:12px}.toolbar input{flex:1}
+.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:850px}th,td{text-align:left;padding:11px 9px;border-bottom:1px solid #eee;vertical-align:top}th{font-size:13px;color:#666}
+.product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.product-card{border:1px solid #eee;border-radius:12px;padding:13px}.product-card h3{margin:0 0 5px}.stock{font-weight:bold}.low{color:#a33}.ok{color:#176b36}
+.msg{margin:8px 0}.success{color:#176b36}.error{color:#a33}.small{font-size:13px}
+@media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}.formgrid{grid-template-columns:1fr}.product-grid{grid-template-columns:1fr}.wrap{padding:10px}.panel{padding:14px}.toolbar{flex-direction:column}}
+</style>
 </head>
 <body>
-<header>
-  <h1>Lele's Cosmetics — Admin</h1>
-  <button id="logoutBtn" class="danger hidden">Log out</button>
-</header>
-
+<header><h1>Lele's Cosmetics — Admin</h1><button id="logoutBtn" class="danger">Log out</button></header>
 <main class="wrap">
-  <section id="loginPanel" class="panel login">
-    <h2>Admin Login</h2>
-    <p class="muted">Enter the admin key configured in Cloudflare.</p>
-    <input id="adminKey" type="password" placeholder="Admin key" autocomplete="current-password">
-    <button id="loginBtn" class="primary">Open Dashboard</button>
-    <div id="loginMsg" class="error"></div>
-  </section>
+<section id="loginPanel" class="panel login">
+<h2>Admin Login</h2><p class="muted">Enter your private Cloudflare ADMIN_KEY.</p>
+<input id="adminKey" type="password" placeholder="Admin key" autocomplete="current-password">
+<button id="loginBtn" class="primary">Open Dashboard</button><div id="loginMsg" class="error"></div>
+</section>
 
-  <section id="dashboard" class="hidden">
-    <div class="stats">
-      <div class="stat"><span>Total Orders</span><b id="totalOrders">0</b></div>
-      <div class="stat"><span>Pending</span><b id="pendingOrders">0</b></div>
-      <div class="stat"><span>Completed</span><b id="completedOrders">0</b></div>
-      <div class="stat"><span>Sales</span><b id="salesTotal">K0.00</b></div>
-    </div>
+<section id="dashboard" class="hidden">
+<div class="stats">
+<div class="stat">Total Orders<b id="totalOrders">0</b></div>
+<div class="stat">Pending<b id="pendingOrders">0</b></div>
+<div class="stat">Completed<b id="completedOrders">0</b></div>
+<div class="stat">Sales<b id="salesTotal">K0.00</b></div>
+</div>
 
-    <div class="panel" style="margin-top:20px">
-      <div class="toolbar">
-        <input id="search" placeholder="Search order number, customer, phone or location">
-        <button id="refreshBtn" class="primary">Refresh</button>
-      </div>
-      <div id="msg" class="small"></div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Order</th>
-              <th>Customer</th>
-              <th>Delivery</th>
-              <th>Payment</th>
-              <th>Total</th>
-              <th>Date</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody id="ordersBody"></tbody>
-        </table>
-      </div>
-    </div>
-  </section>
+<div class="tabs" style="margin-top:18px">
+<button class="tab active" data-tab="ordersTab">Orders</button>
+<button class="tab" data-tab="productsTab">Products & Stock</button>
+</div>
+
+<section id="ordersTab" class="panel">
+<div class="toolbar"><input id="search" placeholder="Search orders, customers, phone or location"><button id="refreshBtn" class="primary">Refresh</button></div>
+<div id="orderMsg" class="msg small"></div>
+<div class="table-wrap"><table><thead><tr><th>Order</th><th>Customer</th><th>Delivery</th><th>Payment</th><th>Total</th><th>Date</th><th>Status</th></tr></thead><tbody id="ordersBody"></tbody></table></div>
+</section>
+
+<section id="productsTab" class="hidden">
+<div class="panel">
+<h2 id="formTitle">Add Product</h2>
+<div class="formgrid">
+<input id="productId" type="hidden">
+<div><label>Name</label><input id="pName" placeholder="e.g. Signature Noir"></div>
+<div><label>Category</label><select id="pCategory"><option>Perfume</option><option>Body Oil</option></select></div>
+<div><label>Price (K)</label><input id="pPrice" type="number" min="0" step="0.01" placeholder="200"></div>
+<div><label>Stock quantity</label><input id="pStock" type="number" min="0" step="1" placeholder="10"></div>
+<div class="full"><label>Description</label><textarea id="pDescription" rows="2" placeholder="Short product description"></textarea></div>
+<div class="full"><label>Image URL (optional for now)</label><input id="pImage" placeholder="https://..."></div>
+</div>
+<div class="actions" style="margin-top:12px"><button id="saveProductBtn" class="primary">Save Product</button><button id="cancelEditBtn" class="tab">Clear</button></div>
+<div id="productMsg" class="msg small"></div>
+</div>
+<div class="panel">
+<div class="toolbar"><input id="productSearch" placeholder="Search products"><button id="refreshProductsBtn" class="primary">Refresh</button></div>
+<div id="productGrid" class="product-grid"></div>
+</div>
+</section>
+</section>
 </main>
-
 <script src="admin.js"></script>
 </body>
 </html>
