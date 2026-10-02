@@ -3,56 +3,131 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lele's Cosmetics — Products</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta name="description" content="Shop Lele's Cosmetics perfumes and body oils in Lundazi, Zambia.">
+  <title>Shop | Lele's Cosmetics</title>
+  <style>
+    :root{
+      --rose:#96345f;--deep:#321526;--pink:#fae8ef;--cream:#fffaf7;
+      --gold:#c69a55;--text:#342930;--muted:#766871;--line:#eadde3
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--cream);color:var(--text);line-height:1.5}
+    a{text-decoration:none;color:inherit}
+    button,input,select{font:inherit}
+    .container{width:min(1120px,92%);margin:auto}
+    header{position:sticky;top:0;z-index:50;background:rgba(255,250,247,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+    .nav{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .brand{font-size:1.3rem;font-weight:900;color:var(--deep)}
+    .brand span{color:var(--rose)}
+    nav{display:flex;gap:22px}
+    nav a{font-weight:700;color:#5e5159}
+    nav a:hover{color:var(--rose)}
+    .cart{background:var(--deep);color:white;border-radius:999px;padding:10px 15px;font-weight:800}
+    .hero{background:linear-gradient(135deg,#fff6f9,#f3d8e3);padding:55px 0 45px}
+    .eyebrow{text-transform:uppercase;letter-spacing:2.5px;font-size:.75rem;font-weight:900;color:var(--rose)}
+    h1{font-size:clamp(2.5rem,6vw,4.7rem);line-height:1;margin:10px 0;color:var(--deep);letter-spacing:-1.5px}
+    .hero p{max-width:650px;color:#66555f;font-size:1.05rem;margin-bottom:0}
+    .tools{padding:26px 0 10px}
+    .toolbar{display:grid;grid-template-columns:1fr 210px;gap:12px}
+    .toolbar input,.toolbar select{width:100%;height:50px;border:1px solid #d9cbd2;border-radius:13px;background:white;padding:0 15px;outline:none}
+    .toolbar input:focus,.toolbar select:focus{border-color:var(--rose);box-shadow:0 0 0 3px rgba(150,52,95,.1)}
+    .result-count{color:var(--muted);font-size:.9rem;margin:12px 0 0}
+    #products{padding:22px 0 70px;display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+    .card{background:white;border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 12px 35px rgba(50,21,38,.07);display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+    .card:hover{transform:translateY(-4px);box-shadow:0 18px 42px rgba(50,21,38,.12)}
+    .product-photo{height:285px;background:linear-gradient(145deg,#f8e8ee,#fff);display:grid;place-items:center;overflow:hidden;position:relative}
+    .product-photo img{width:100%;height:100%;object-fit:cover;display:block}
+    .photo-label{font-weight:900;color:var(--rose);letter-spacing:2px}
+    .card-body{padding:20px;display:flex;flex-direction:column;flex:1}
+    .category{font-size:.72rem;font-weight:900;letter-spacing:1.8px;text-transform:uppercase;color:var(--rose)}
+    .card h3{font-size:1.35rem;margin:6px 0 8px;color:var(--deep)}
+    .description{font-size:.92rem;color:var(--muted);margin:0 0 18px;min-height:45px}
+    .price-row{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .price{font-size:1.25rem;font-weight:900;color:var(--deep)}
+    .btn{border:0;border-radius:999px;background:var(--rose);color:white;padding:11px 17px;font-weight:900;cursor:pointer}
+    .btn:hover{background:#7e294f}
+    .empty{grid-column:1/-1;background:white;border:1px dashed #d9cbd2;border-radius:18px;padding:35px;text-align:center;color:var(--muted)}
+    .shop-note{padding:0 0 65px}
+    .note{background:var(--deep);color:white;border-radius:24px;padding:28px;display:flex;justify-content:space-between;gap:20px;align-items:center}
+    .note h2{margin:0 0 5px}.note p{margin:0;color:#eadce2}
+    .note .btn{background:white;color:var(--deep);white-space:nowrap}
+    footer{background:#21121b;color:#d9cbd1;text-align:center;padding:30px 0;font-size:.9rem}
+    footer strong{color:white}
+    .wa{position:fixed;right:20px;bottom:20px;width:58px;height:58px;border-radius:50%;background:#25d366;color:#063c20;display:grid;place-items:center;font-size:26px;z-index:60;box-shadow:0 12px 30px rgba(0,0,0,.2)}
+    @media(max-width:900px){#products{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:650px){
+      nav{display:none}.toolbar{grid-template-columns:1fr}
+      #products{grid-template-columns:1fr}.product-photo{height:300px}
+      .note{display:block}.note .btn{margin-top:18px;display:inline-flex}
+      .nav{min-height:64px}.brand{font-size:1.1rem}.cart{font-size:.85rem;padding:8px 11px}
+    }
+  </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="nav-wrap">
-      <a class="brand" href="index.html">Lele's <span>Cosmetics</span></a>
-      <nav>
-        <a href="index.html">Home</a>
-        <a class="active" href="products.html">Products</a>
-        <a href="about.html">About</a>
-        <a class="cart-link" href="cart.html">Cart <span id="cartCount">0</span></a>
-      </nav>
+<header>
+  <div class="container nav">
+    <a class="brand" href="index.html">Lele's <span>Cosmetics</span></a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="about.html">About Us</a>
+    </nav>
+    <a class="cart" href="cart.html">🛒 Cart <span id="cartCount">0</span></a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="container">
+      <div class="eyebrow">Lele's Cosmetics • Lundazi</div>
+      <h1>Find your signature scent.</h1>
+      <p>Explore our current perfumes and body oils. Add your favourites to your cart and checkout online, with Mobile Money or Cash on Delivery available.</p>
     </div>
-  </header>
+  </section>
 
-  <main class="shop-page">
-    <section class="shop-hero">
-      <div>
-        <p class="eyebrow">LELE'S COSMETICS</p>
-        <h1>Find your signature scent.</h1>
-        <p>Shop perfumes and body oils made to leave a lasting impression.</p>
+  <section class="tools">
+    <div class="container">
+      <div class="toolbar">
+        <input id="productSearch" type="search" placeholder="Search perfumes or body oils..." aria-label="Search products">
+        <select id="categoryFilter" aria-label="Filter products by category">
+          <option value="all">All products</option>
+          <option value="Perfume">Perfumes</option>
+          <option value="Body Oil">Body Oils</option>
+          <option value="Oil">Body Oils</option>
+        </select>
       </div>
-      <a class="hero-cart" href="cart.html">View Cart</a>
-    </section>
+      <div class="result-count" id="resultCount">Loading products...</div>
+    </div>
+  </section>
 
-    <section class="catalogue">
-      <div class="catalogue-top">
+  <section class="container" aria-label="Product catalogue">
+    <div id="products"></div>
+  </section>
+
+  <section class="shop-note">
+    <div class="container">
+      <div class="note">
         <div>
-          <h2>Our Collection</h2>
-          <p id="resultCount">Loading products...</p>
+          <h2>Need help choosing?</h2>
+          <p>Chat with Lele's Cosmetics on WhatsApp about scents, availability and delivery in Lundazi.</p>
         </div>
-        <div class="controls">
-          <input id="productSearch" type="search" placeholder="Search products...">
-          <select id="categoryFilter">
-            <option value="all">All products</option>
-            <option value="Perfume">Perfumes</option>
-            <option value="Body Oil">Body Oils</option>
-          </select>
-        </div>
+        <a class="btn" href="https://wa.me/260978955714?text=Hello%20Lele%27s%20Cosmetics%2C%20please%20help%20me%20choose%20a%20product." target="_blank" rel="noopener">Chat on WhatsApp</a>
       </div>
+    </div>
+  </section>
+</main>
 
-      <div id="products" class="product-grid"></div>
-    </section>
-  </main>
+<footer>
+  <div class="container">
+    <strong>Lele's Cosmetics</strong><br>
+    Perfumes • Body Oils • Beauty Essentials
+    <p>Lundazi, Zambia • WhatsApp: 0978955714</p>
+    <small>© 2026 Lele's Cosmetics. All rights reserved.</small>
+  </div>
+</footer>
 
-  <footer class="site-footer">
-    <p>© Lele's Cosmetics. Beauty that stays with you.</p>
-  </footer>
+<a class="wa" href="https://wa.me/260978955714?text=Hello%20Lele%27s%20Cosmetics%2C%20I%27d%20like%20to%20ask%20about%20your%20products." target="_blank" rel="noopener" aria-label="Chat on WhatsApp">💬</a>
 
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
