@@ -1,3 +1,9 @@
+
+function adminAuthorized(request, env) {
+  const key = request.headers.get("X-Admin-Key");
+  return !!env.ADMIN_KEY && key === env.ADMIN_KEY;
+}
+
 export async function onRequestGet(context) {
   const { env } = context;
 
@@ -25,6 +31,13 @@ export async function onRequestGet(context) {
 
 export async function onRequestPost(context) {
   const { request, env } = context;
+
+  if (!adminAuthorized(request, env)) {
+    return Response.json({
+      success: false,
+      error: "Unauthorized"
+    }, { status: 401 });
+  }
 
   try {
     const body = await request.json();
@@ -99,6 +112,13 @@ export async function onRequestPost(context) {
 
 export async function onRequestPatch(context) {
   const { request, env } = context;
+
+  if (!adminAuthorized(request, env)) {
+    return Response.json({
+      success: false,
+      error: "Unauthorized"
+    }, { status: 401 });
+  }
 
   try {
     const body = await request.json();
