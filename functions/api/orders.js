@@ -25,7 +25,7 @@ export async function onRequestPost({ request, env }) {
 
     const placeholders = ids.map(() => "?").join(",");
     const productsResult = await env.LELES_DB.prepare(
-      `SELECT id, name, price, stock FROM products WHERE id IN (${placeholders}) AND active = 1`
+      `SELECT id, name, price FROM products WHERE id IN (${placeholders}) AND active = 1`
     ).bind(...ids).all();
 
     const products = productsResult.results || [];
@@ -40,14 +40,6 @@ export async function onRequestPost({ request, env }) {
 
       if (!product || !Number.isInteger(quantity) || quantity < 1) {
         return Response.json({ success: false, error: "One or more cart items are invalid" }, { status: 400 });
-      }
-
-      // Stock of 0 means unavailable for new orders.
-      if (Number(product.stock) < quantity) {
-        return Response.json({
-          success: false,
-          error: `${product.name} has only ${Number(product.stock)} item(s) in stock.`
-        }, { status: 409 });
       }
 
       const unitPrice = Number(product.price);
@@ -65,7 +57,6 @@ export async function onRequestPost({ request, env }) {
 
     const orderNumber = "LELE-" + Date.now().toString(36).toUpperCase();
 
-    // Keep the existing schema and create the customer first.
     const customerResult = await env.LELES_DB.prepare(
       `INSERT INTO customers (name, phone, delivery_location)
        VALUES (?, ?, ?)`
@@ -80,34 +71,20 @@ export async function onRequestPost({ request, env }) {
 
     const orderId = orderResult.meta.last_row_id;
 
-    const statements = [];
-
-    for (const item of normalized) {
-      statements.push(
-        env.LELES_DB.prepare(
-          `UPDATE products
-           SET stock = stock - ?
-           WHERE id = ? AND active = 1 AND stock >= ?`
-        ).bind(item.quantity, item.product_id, item.quantity)
-      );
-    }
-
-    for (const item of normalized) {
-      statements.push(
-        env.LELES_DB.prepare(
-          `INSERT INTO order_items
-           (order_id, product_id, product_name, quantity, unit_price, subtotal)
-           VALUES (?, ?, ?, ?, ?, ?)`
-        ).bind(
-          orderId,
-          item.product_id,
-          item.product_name,
-          item.quantity,
-          item.unit_price,
-          item.subtotal
-        )
-      );
-    }
+    const statements = normalized.map(item =>
+      env.LELES_DB.prepare(
+        `INSERT INTO order_items
+         (order_id, product_id, product_name, quantity, unit_price, subtotal)
+         VALUES (?, ?, ?, ?, ?, ?)`
+      ).bind(
+        orderId,
+        item.product_id,
+        item.product_name,
+        item.quantity,
+        item.unit_price,
+        item.subtotal
+      )
+    );
 
     if (statements.length) {
       await env.LELES_DB.batch(statements);
