@@ -28,6 +28,54 @@
 </div>
 </div><div id="ordersTab" class="hidden"><div class="stats"><div class="stat"><strong id="totalOrders">0</strong><span>Total orders</span></div><div class="stat"><strong id="pendingOrders">0</strong><span>Pending</span></div><div class="stat"><strong id="confirmedOrders">0</strong><span>Confirmed</span></div><div class="stat"><strong id="salesTotal">K0.00</strong><span>Order value</span></div></div><div class="panel"><div class="filters"><input id="search" placeholder="Search order, customer or phone..."><select id="statusFilter"><option value="all">All statuses</option><option>Pending</option><option>Confirmed</option><option>Preparing</option><option>Out for Delivery</option><option>Delivered</option><option>Cancelled</option></select></div><div id="orders"></div></div></div>
 <div id="productsTab" class="hidden"><div class="panel" style="margin-bottom:18px"><div class="row" style="justify-content:space-between"><div><h2 style="margin:0">Product Management</h2><p class="muted" style="margin:5px 0 0">Add products and attach pictures directly from your phone.</p></div><button id="newProduct" class="primary">+ Add product</button></div></div><div id="productFormPanel" class="panel hidden" style="margin-bottom:18px"><h2 id="formTitle" style="margin-top:0">Add product</h2><form id="productForm"><input type="hidden" id="productId"><div class="form-grid"><div><label>Product name</label><input id="pName" required placeholder="e.g. Ameerat Al Arab"></div><div><label>Category</label><select id="pCategory"><option>Perfume</option><option>Body Oil</option><option>Other</option></select></div><div><label>Price (K)</label><input id="pPrice" type="number" min="0" step="0.01" required placeholder="200"></div><div><label>Stock</label><input id="pStock" type="number" min="0" step="1" value="0"></div><div class="full"><label>Description</label><textarea id="pDescription" placeholder="Short description of the product"></textarea></div><div class="full image-box"><b>Product picture</b><p class="hint">Choose a picture from your phone gallery or take a new one. JPG, PNG or WebP, up to 5MB.</p><input id="pImage" type="file" accept="image/*" capture="environment"><img id="preview" class="preview" alt="Preview"><div id="uploadStatus" class="hint"></div></div></div><div class="row" style="margin-top:14px"><button class="primary" type="submit" id="saveProduct">Save product</button><button class="secondary" type="button" id="cancelProduct">Cancel</button></div><div id="productError" class="error"></div></form></div><div class="panel"><div class="filters"><input id="productSearch" placeholder="Search products..."><select id="productFilter"><option value="all">All products</option><option value="1">Active only</option><option value="0">Hidden only</option></select></div><div id="products" class="product-grid"></div></div></div>
+
+<div id="couponsTab" class="hidden">
+  <div class="panel" style="margin-bottom:18px">
+    <h2 style="margin-top:0">🏷️ Create Coupon</h2>
+    <form id="couponForm">
+      <div class="form-grid">
+        <div>
+          <label>Coupon code</label>
+          <input id="couponCode" required placeholder="e.g. LELE10">
+        </div>
+        <div>
+          <label>Discount type</label>
+          <select id="couponType">
+            <option value="percentage">Percentage (%)</option>
+            <option value="fixed">Fixed amount (K)</option>
+          </select>
+        </div>
+        <div>
+          <label>Discount value</label>
+          <input id="couponValue" type="number" min="0" step="0.01" required placeholder="10">
+        </div>
+        <div>
+          <label>Minimum order (K)</label>
+          <input id="couponMinOrder" type="number" min="0" step="0.01" value="0">
+        </div>
+        <div>
+          <label>Maximum uses</label>
+          <input id="couponMaxUses" type="number" min="0" step="1" value="0">
+          <div class="hint">0 = unlimited</div>
+        </div>
+        <div>
+          <label>Expiry (optional)</label>
+          <input id="couponExpiry" type="datetime-local">
+        </div>
+      </div>
+      <div class="row" style="margin-top:14px">
+        <button class="primary" type="submit" id="createCoupon">+ Create coupon</button>
+        <button class="secondary" type="button" id="refreshCoupons">↻ Refresh</button>
+      </div>
+      <div id="couponError" class="error"></div>
+      <div id="couponSuccess" class="success"></div>
+    </form>
+  </div>
+  <div class="panel">
+    <h2 style="margin-top:0">Available Coupons</h2>
+    <div id="couponsList"></div>
+  </div>
+</div>
 </section></main>
 <script>
 let adminKey="",orders=[],products=[],editingImageUrl="";
@@ -143,7 +191,8 @@ function renderCoupons(){
   });
 }
 
-document.getElementById("couponForm").onsubmit=async e=>{
+const couponForm=document.getElementById("couponForm");
+if(couponForm) couponForm.onsubmit=async e=>{
   e.preventDefault();
   const btn=document.getElementById("createCoupon");
   const err=document.getElementById("couponError");
@@ -190,7 +239,8 @@ document.getElementById("couponForm").onsubmit=async e=>{
   }
 };
 
-document.getElementById("refreshCoupons").onclick=async()=>{
+const refreshCoupons=document.getElementById("refreshCoupons");
+if(refreshCoupons) refreshCoupons.onclick=async()=>{
   const b=document.getElementById("refreshCoupons");
   b.disabled=true;
   try{await loadCoupons()}catch(e){alert(e.message)}
@@ -208,5 +258,56 @@ document.querySelectorAll(".tab").forEach(t=>t.onclick=async()=>{
   if(t.dataset.tab==="products")await loadProducts();
   if(t.dataset.tab==="coupons")await loadCoupons()
 });
-document.getElementById("loginBtn").onclick=async()=>{const k=document.getElementById("key").value.trim();if(!k){document.getElementById("loginError").textContent="Please enter your admin key.";return}adminKey=k;const btn=document.getElementById("loginBtn");btn.disabled=true;btn.textContent="Signing in…";document.getElementById("loginError").textContent="";try{await loadOrders();document.getElementById("login").classList.add("hidden");document.getElementById("dashboard").classList.remove("hidden");document.getElementById("salesTab").classList.remove("hidden");renderSales();document.getElementById("logout").classList.remove("hidden");try{await loadProducts()}catch(e){console.error("Products could not be loaded:",e);document.getElementById("products").innerHTML=`<div class="muted" style="padding:25px;text-align:center">Products could not be loaded. ${esc(e.message)}</div>`}}catch(e){adminKey="";document.getElementById("loginError").textContent=e.message||"Admin login failed. Check your admin key and try again."}finally{btn.disabled=false;btn.textContent="Sign in"}};document.getElementById("logout").onclick=()=>{adminKey="";document.getElementById("dashboard").classList.add("hidden");document.getElementById("login").classList.remove("hidden");document.getElementById("logout").classList.add("hidden");document.getElementById("key").value=""};
+document.getElementById("loginBtn").onclick=async()=>{
+  const k=document.getElementById("key").value.trim();
+  const error=document.getElementById("loginError");
+  const btn=document.getElementById("loginBtn");
+  if(!k){error.textContent="Please enter your admin key.";return}
+
+  adminKey=k;
+  btn.disabled=true;
+  btn.textContent="Signing in…";
+  error.textContent="";
+
+  try{
+    // Verify the key, but do not block the dashboard forever if an API request hangs.
+    const controller=new AbortController();
+    const timer=setTimeout(()=>controller.abort(),8000);
+    const r=await fetch("/api/orders",{
+      method:"GET",
+      headers:{"X-Admin-Key":adminKey},
+      signal:controller.signal,
+      cache:"no-store"
+    });
+    clearTimeout(timer);
+
+    let d={};
+    try{d=await r.json()}catch{}
+    if(!r.ok || d.success===false){
+      throw Error(d.error || `Login failed (${r.status})`);
+    }
+
+    orders=d.orders||[];
+
+    document.getElementById("login").classList.add("hidden");
+    document.getElementById("dashboard").classList.remove("hidden");
+    document.getElementById("salesTab").classList.remove("hidden");
+    document.getElementById("logout").classList.remove("hidden");
+    renderOrders();
+    renderSales();
+
+    // Load products/coupons in the background.
+    loadProducts().catch(e=>console.error("Products could not be loaded:",e));
+  }catch(e){
+    adminKey="";
+    if(e.name==="AbortError"){
+      error.textContent="The admin server is taking too long to respond. Please check Cloudflare and try again.";
+    }else{
+      error.textContent=e.message || "Admin login failed. Check your admin key and try again.";
+    }
+  }finally{
+    btn.disabled=false;
+    btn.textContent="Sign in";
+  }
+};
 </script></body></html>
