@@ -1,16 +1,41 @@
-
-:root{--cream:#fbf8f3;--white:#fff;--rose:#292725;--deep:#292725;--pink:#f1ece5;--gold:#b4a184;--text:#292725;--muted:#77736e;--line:#e6dfd6;--wine:#292725;--dark:#292725}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{background:var(--cream)!important;color:var(--text)!important}
-header,.site-header{background:rgba(251,248,243,.97)!important;color:var(--text)!important;border-color:var(--line)!important}
-nav a,.brand,.logo{color:var(--text)!important}
-button,.btn,.header-cta,.cart,.cart-link,.order-btn,input[type=submit]{background:#292725!important;color:#fff!important;border-color:#292725!important}
-.card,.product-card,.checkout,.about-card,.soft,.why,.order-box,.note{background:#f1ece5!important;border-color:#e6dfd6!important;color:#292725}
-input,select,textarea{background:#fff!important;color:#292725!important;border-color:#d9d2c8!important}
-.muted,.description,.hero p,.section-head p,.about-card p{color:#77736e!important}
-.hero,.pagehero,.story{background:linear-gradient(135deg,#fbf8f3,#f1ece5)!important}
-.trust,.final-cta,.story-box,.cta,footer{background:#292725!important;color:#fff!important}
-.trust span,.story-box p,.final-cta p,.cta p,footer p{color:#e6dfd6!important}
-.category-card:first-child,.category-card:last-child{background:linear-gradient(135deg,#e8e0d5,#b4a184)!important;color:#292725!important}
-.category-card p{color:#403b35!important}
-:focus-visible{outline:2px solid #b4a184;outline-offset:3px}
+/* Lele's Cosmetics — unified cream, beige and charcoal theme */
+:root{
+  --cream:#f8f5ef; --white:#fffdf9; --rose:#343638; --deep:#343638;
+  --pink:#eee8df; --gold:#b8a58a; --text:#343638; --muted:#6d7072;
+  --line:#ded7cd; --wine:#343638; --dark:#292c2e; --ink:#343638;
+  --accent:#8b8174; --soft:#eee8df;
+}
+html{scroll-behavior:smooth}
+body{background:#f8f5ef!important;color:#343638!important}
+header,.site-header{background:rgba(248,245,239,.97)!important;color:#343638!important;border-color:#ded7cd!important}
+nav,nav a,.brand,.logo{color:#343638!important}
+nav a:hover{color:#8b8174!important}
+.hero,.pagehero,.shop-hero{background:linear-gradient(135deg,#f8f5ef,#e9e1d6)!important}
+h1,h2,h3,.price,.card h3,.head h2{color:#343638!important}
+.eyebrow,.category,.photo-label{color:#777064!important}
+button,.btn,.header-cta,.cart,.cart-link,.order-btn,.hero-cart,input[type=submit]{
+  background:#343638!important;color:#fff!important;border-color:#343638!important
+}
+button:hover,.btn:hover,.header-cta:hover,.cart:hover,.cart-link:hover{background:#4b4f51!important}
+.card,.product-card,.checkout,.about-card,.soft,.why,.order-box,.note,.empty{
+  background:#eee8df!important;border-color:#ded7cd!important;color:#343638!important
+}
+.product-photo{background:linear-gradient(145deg,#e9e1d6,#f8f5ef)!important}
+input,select,textarea,.toolbar input,.toolbar select{
+  background:#fffdf9!important;color:#343638!important;border-color:#d3cbc0!important
+}
+.muted,.description,.hero p,.section-head p,.about-card p,.card p,.soft p,.head p{
+  color:#6d7072!important
+}
+.trust,.final-cta,.story-box,.cta,footer,.shop-note .note{
+  background:#343638!important;color:#fff!important
+}
+.trust span,.story-box p,.final-cta p,.note p,.cta p,footer p,footer small{
+  color:#e6e1d9!important
+}
+.category-card{background:linear-gradient(135deg,#e9e1d6,#d6c8b5)!important;color:#343638!important}
+.category-card p{color:#4b4f51!important}
+.category-card .btn,.note .btn{background:#fffdf9!important;color:#343638!important}
+.status,.step.active{background:#e9e1d6!important;color:#343638!important}
+:focus-visible{outline:2px solid #8b8174;outline-offset:3px}
 @media(max-width:800px){nav{display:none}}
