@@ -1,0 +1,10 @@
+Add this line immediately before the closing </head> tag in EACH customer page:
+<link rel="stylesheet" href="neutral-theme.css">
+
+Pages:
+index.html
+products.html
+perfumes.html
+about.html
+cart.html
+track-order.html
