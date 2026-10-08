@@ -1,18 +1,8 @@
-LELE'S COSMETICS - COUPON UPDATE
+LELE'S COSMETICS — FULL HOMEPAGE FILE
 
-Files:
-1. frontend/script.js
-   Replace your existing website script.js with this file.
-
-2. functions/api/orders.js
-   Replace your existing Cloudflare Pages Function orders.js with this file.
-
-3. functions/api/coupons.js
-   Your coupon API file.
-
-IMPORTANT:
-Do not put the frontend script.js inside the functions folder.
-Do not combine the backend files into the frontend script.
-
-If your GitHub repository already has these files/folders, replace the corresponding files while keeping the same folder structure.
-Cloudflare Pages will deploy the backend functions from its configured functions directory.
+1. This ZIP includes a complete replacement index.html with the warm cream, beige and charcoal style.
+2. Upload index.html to the ROOT of your GitHub repository and choose to replace the existing index.html.
+3. Commit the change.
+4. This changes the homepage only. It does not replace product, cart, checkout, order tracking, or admin pages.
+5. Other pages may keep their existing colours until separately updated. Do not replace script.js or backend files with these files.
+6. Keep a copy of your existing index.html before replacing it, in case you want to restore it.
