@@ -1,0 +1,53 @@
+/* Lele's Cosmetics — warm neutral beauty theme
+   Add this stylesheet AFTER existing stylesheets in each customer-facing HTML page.
+   Palette: warm cream, beige, charcoal, muted grey, subtle sage.
+*/
+:root {
+  --cream: #fbf8f3;
+  --white: #ffffff;
+  --rose: #292725;
+  --deep: #292725;
+  --pink: #f1ece5;
+  --gold: #b4a184;
+  --text: #292725;
+  --muted: #77736e;
+  --line: #e6dfd6;
+  --wine: #292725;
+  --dark: #292725;
+}
+html { scroll-behavior: smooth; }
+body {
+  background: var(--cream) !important;
+  color: var(--text) !important;
+}
+header, .site-header {
+  background: rgba(251, 248, 243, .97) !important;
+  color: var(--text) !important;
+  border-color: var(--line) !important;
+}
+nav a, .brand, .logo, .site-header a {
+  color: var(--text);
+}
+button, .btn, .header-cta, .cart-link, input[type="submit"] {
+  background: var(--deep) !important;
+  color: var(--white) !important;
+  border-color: var(--deep) !important;
+}
+.card, .product-card, .checkout, .about-card, .hero-card,
+.product, .product-item, .order-card {
+  background: var(--pink);
+  border-color: var(--line);
+}
+input, select, textarea {
+  background: var(--white);
+  color: var(--text);
+  border-color: #d9d2c8;
+}
+small, .muted, .description, .product-description {
+  color: var(--muted);
+}
+a:hover { opacity: .82; }
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
